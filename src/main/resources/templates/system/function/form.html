@@ -1,0 +1,113 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="edge" />
+<link rel="shortcut icon" href="/style/images/index/favicon.png" />
+<script type="text/javascript">
+
+    $(function() {
+        $('#modelForm').on('submit', function(event){
+            var $form = $(this);
+            progressLoad();
+            var isValid = $form.form('validate');
+            if (!isValid) {
+                progressClose();
+                return isValid;
+            }
+            $.ajax({
+                url: '/function/save',
+                data: $form.serialize(),
+                success: function(result){
+                    progressClose();
+                    if (result.success) {
+                    	parent.$.modalDialog.handler.dialog('close');
+                        parent.$.modalDialog.openner_datagrid.treegrid('reload');//之所以能在这里调用到parent.$.modalDialog.openner_dataGrid这个对象，是因为user.jsp页面预定义好了
+                    } else {
+                        parent.$.messager.alert('提示', result.msg, 'warning');
+                    }
+                },
+                error: function(){
+                    progressClose();
+                    alert("系统错误");
+                }
+            });
+            return false;
+        });
+    });
+</script>
+<div class="easyui-layout" data-options="fit:true,border:false">
+    <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
+        <form id="modelForm" method="post">
+            <table class="grid">
+            		 <tr>
+                        <td class="tdTit"><strong class="red" >*</strong><label>父类：</label></td>
+                        <td>
+                        <input class="easyui-combotreegrid" name="parentId" th:unless="${function.id}" data-options="
+						        width:'200',
+						        panelWidth:200,
+						        url:'/function/tree',
+						        idField:'id',
+						        treeField:'name',
+						        columns:[[
+						            {field:'name',title:'功能',width:100},
+						            {field:'uri',title:'地址',width:80},
+
+						        ]]" />
+                        <input type="hidden"  name="parentId" th:if="${function.id}" th:value="${function.parentId}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdTit"><strong class="red" >*</strong><label>资源类型：</label></td>
+                        <td>
+<!--                         <input type="text"  name="type"   class="easyui-validatebox" data-options="required:true" th:value="${function.type}"/> -->
+                         <select name="type" class="easyui-combobox"    required="required"  data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+                            <option th:selected="${function.type} == 'module' ? 'selected' "  value="module">模块</option>
+                            <option th:selected="${function.type} == 'menu' ? 'selected' "  value="menu">菜单</option>
+                            <option th:selected="${function.type} == 'function' ? 'selected' " value="function" >功能</option>
+                       </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdTit"><strong class="red" >*</strong><label>权限地址：</label></td>
+                        <td>
+                        <input type="text"  name="uri"   class="easyui-validatebox" data-options="required:true" th:value="${function.uri}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdTit"><strong class="red" >*</strong><label>资源名称：</label></td>
+                        <td>
+                        <input type="text"  name="name"   class="easyui-validatebox" data-options="required:true" th:value="${function.name}"/>
+                        </td>
+                    </tr>
+                     <tr>
+                        <td class="tdTit"><label>图标样式：</label></td>
+                        <td>
+                        <input type="text"  name="iconCls"   class="easyui-validatebox" th:value="${function.iconCls}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdTit"><label>是否打开</label></td>
+                        <td>
+                        <!-- <input type="text"  name="state"   class="easyui-validatebox" data-options="required:true" th:value="${function.state}"/> -->
+                        <select name="state" class="easyui-combobox"   data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+                            <option th:selected="${function.state} == '' ? 'selected' "  value="">如果是子节点不要选择</option>
+                            <option th:selected="${function.state} == 'open' ? 'selected' "  value="open">打开</option>
+                            <option th:selected="${function.state} == 'closed' ? 'selected' " value="closed" >关闭</option>
+                       </select>
+                        </td>
+                    </tr> 
+                    <tr>
+                        <td class="tdTit"><label>描述：</label></td>
+                        <td>
+                        <input type="text"  name="description"   class="easyui-validatebox" th:value="${function.description}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdTit"><label>排序：</label></td>
+                        <td>
+                        <input type="number"  name="sort"   class="easyui-numberspinner" th:value="${function.sort}"/>
+                        </td>
+                    </tr>
+            </table>
+            <input type="hidden" name="id" th:value="${function.id}"/>
+        </form>
+    </div>
+</div>

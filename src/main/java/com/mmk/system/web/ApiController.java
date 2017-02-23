@@ -40,7 +40,7 @@ public class ApiController extends BaseController {
     @RequestMapping("/api/list")
     public ModelAndView list(){
         log.info("系统API列表查询");
-        ModelAndView modelAndView = new ModelAndView("api/list");
+        ModelAndView modelAndView = new ModelAndView("system/api/list");
         return  modelAndView;
     }
       
@@ -66,7 +66,7 @@ public class ApiController extends BaseController {
      */
     @RequestMapping("/api/add")
     public ModelAndView addPage(){
-        ModelAndView modelAndView = new ModelAndView("api/form");
+        ModelAndView modelAndView = new ModelAndView("system/api/form");
         modelAndView.addObject("api", new Api());
         return modelAndView;
     }
@@ -79,7 +79,7 @@ public class ApiController extends BaseController {
     public ModelAndView editPage(Api api){
         log.info("系统API编辑页面");
         api = apiService.find(api.getId());
-        ModelAndView modelAndView = new ModelAndView("api/form");
+        ModelAndView modelAndView = new ModelAndView("system/api/form");
         modelAndView.addObject("api", api);
         return modelAndView ;
     }

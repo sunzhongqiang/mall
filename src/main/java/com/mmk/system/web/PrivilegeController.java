@@ -48,7 +48,7 @@ public class PrivilegeController extends BaseController {
 	@RequestMapping("/privilege/list")
 	public ModelAndView list() {
 		log.info("系统权限表列表查询");
-		ModelAndView modelAndView = new ModelAndView("privilege/list");
+		ModelAndView modelAndView = new ModelAndView("system/privilege/list");
 		return modelAndView;
 	}
 
@@ -75,7 +75,7 @@ public class PrivilegeController extends BaseController {
 	 */
 	@RequestMapping("/privilege/add")
 	public ModelAndView addPage() {
-		ModelAndView modelAndView = new ModelAndView("privilege/form");
+		ModelAndView modelAndView = new ModelAndView("system/privilege/form");
 		modelAndView.addObject("privilege", new Privilege());
 		return modelAndView;
 	}
@@ -89,7 +89,7 @@ public class PrivilegeController extends BaseController {
 	public ModelAndView editPage(Privilege privilege) {
 		log.info("系统权限表编辑页面");
 		privilege = privilegeService.find(privilege.getId());
-		ModelAndView modelAndView = new ModelAndView("privilege/form");
+		ModelAndView modelAndView = new ModelAndView("system/privilege/form");
 		modelAndView.addObject("privilege", privilege);
 		return modelAndView;
 	}

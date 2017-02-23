@@ -41,7 +41,7 @@ public class UserRoleController extends BaseController {
     @RequestMapping("/userRole/list")
     public ModelAndView list(){
         log.info("系统用户角色列表查询");
-        ModelAndView modelAndView = new ModelAndView("userRole/list");
+        ModelAndView modelAndView = new ModelAndView("system/userRole/list");
         return  modelAndView;
     }
     
@@ -68,7 +68,7 @@ public class UserRoleController extends BaseController {
      */
     @RequestMapping("/userRole/add")
     public ModelAndView addPage(){
-        ModelAndView modelAndView = new ModelAndView("userRole/form");
+        ModelAndView modelAndView = new ModelAndView("system/userRole/form");
         modelAndView.addObject("userRole", new UserRole());
         return modelAndView;
     }
@@ -81,7 +81,7 @@ public class UserRoleController extends BaseController {
     public ModelAndView editPage(UserRole userRole){
         log.info("系统用户角色编辑页面");
         userRole = userRoleService.find(userRole.getId());
-        ModelAndView modelAndView = new ModelAndView("userRole/form");
+        ModelAndView modelAndView = new ModelAndView("system/userRole/form");
         modelAndView.addObject("userRole", userRole);
         return modelAndView ;
     }

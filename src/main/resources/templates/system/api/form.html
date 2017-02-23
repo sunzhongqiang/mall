@@ -1,0 +1,93 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="edge" />
+<link rel="shortcut icon" href="/style/images/index/favicon.png" />
+<script type="text/javascript">
+
+    $(function() {
+        $('#modelForm').on('submit', function(event){
+            var $form = $(this);
+            progressLoad();
+            var isValid = $form.form('validate');
+            if (!isValid) {
+                progressClose();
+                return isValid;
+            }
+            $.ajax({
+                url: '/api/save',
+                data: $form.serialize(),
+                success: function(result){
+                    progressClose();
+                    if (result.success) {
+                        parent.$.modalDialog.openner_dataGrid.datagrid('reload');//之所以能在这里调用到parent.$.modalDialog.openner_dataGrid这个对象，是因为user.jsp页面预定义好了
+                        parent.$.modalDialog.handler.dialog('close');
+                    } else {
+                        parent.$.messager.alert('提示', result.msg, 'warning');
+                    }
+                },
+                error: function(){
+                    progressClose();
+                    alert("系统错误");
+                }
+            });
+            return false;
+        });
+    });
+</script>
+<div class="easyui-layout" data-options="fit:true,border:false">
+    <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
+        <form id="modelForm" method="post">
+            <table class="grid">
+                    <tr>
+                        <td class="tdTit"><strong class="red" >*</strong><label>API组：</label></td>
+                        <td>
+                        <select id="cc" class="easyui-combobox" name="apiGroup" style="width: 100px;">
+						    <option selected="selected" th:if="${api.apiGroup} eq '用户API'">用户API</option>
+						    <option th:unless="${api.apiGroup} eq '用户API'">用户API</option>
+						    <option selected="selected" th:if="${api.apiGroup} eq '商品API'">商品API</option>
+						    <option th:unless="${api.apiGroup} eq '商品API'">商品API</option>
+						    <option selected="selected" th:if="${api.apiGroup} eq '交易API'">交易API</option>
+						    <option th:unless="${api.apiGroup} eq '交易API'">交易API</option>
+						    <option selected="selected" th:if="${api.apiGroup} eq '付款API'">付款API</option>
+						    <option th:unless="${api.apiGroup} eq '付款API'">付款API</option>
+						    <option selected="selected" th:if="${api.apiGroup} eq '付款API'">广告API</option>
+						    <option th:unless="${api.apiGroup} eq '付款API'">广告API</option>
+						    <option selected="selected" th:if="${api.apiGroup} eq '微信API'">微信API</option>
+						    <option th:unless="${api.apiGroup} eq '微信API'">微信API</option>
+						</select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdTit"><label>API名称：</label></td>
+                        <td>
+                        <input type="text"  name="name"   class="easyui-validatebox" data-options="required:true" th:value="${api.name}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdTit"><label>接口说明：</label></td>
+                        <td>
+                        <input type="text"  name="description"   class="easyui-validatebox" data-options="required:true" th:value="${api.description}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdTit"><label>地址：</label></td>
+                        <td>
+                        <input type="text"  name="uri"   class="easyui-validatebox" data-options="required:true" th:value="${api.uri}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdTit"><label>参数：</label></td>
+                        <td>
+                        <textarea   name="params"   class="easyui-validatebox" data-options="required:true" th:text="${api.params}" cols="50" rows="10"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdTit"><label>返回值：</label></td>
+                        <td>
+                        <textarea   name="returnValues"   class="easyui-validatebox" data-options="required:true" th:text="${api.returnValues}" cols="50" rows="10" ></textarea>
+                        </td>
+                    </tr>
+            </table>
+            <input type="hidden" name="id" th:value="${api.id}"/>
+        </form>
+    </div>
+</div>

@@ -43,7 +43,7 @@ public class FunctionController extends BaseController {
     @RequestMapping("/function/list")
     public ModelAndView list(){
         log.info("系统功能列表查询");
-        ModelAndView modelAndView = new ModelAndView("function/list");
+        ModelAndView modelAndView = new ModelAndView("system/function/list");
         return  modelAndView;
     }
     
@@ -69,7 +69,7 @@ public class FunctionController extends BaseController {
      */
     @RequestMapping("/function/add")
     public ModelAndView addPage(){
-        ModelAndView modelAndView = new ModelAndView("function/form");
+        ModelAndView modelAndView = new ModelAndView("system/function/form");
         modelAndView.addObject("function", new Function());
         return modelAndView;
     }
@@ -82,7 +82,7 @@ public class FunctionController extends BaseController {
     public ModelAndView editPage(Function function){
         log.info("系统功能编辑页面");
         function = functionService.find(function.getId());
-        ModelAndView modelAndView = new ModelAndView("function/form");
+        ModelAndView modelAndView = new ModelAndView("system/function/form");
         modelAndView.addObject("function", function);
         return modelAndView ;
     }

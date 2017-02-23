@@ -41,7 +41,7 @@ public class OrganizationController extends BaseController {
     @RequestMapping("/organization/list")
     public ModelAndView list(){
         log.info("组织机构列表查询");
-        ModelAndView modelAndView = new ModelAndView("organization/list");
+        ModelAndView modelAndView = new ModelAndView("system/organization/list");
         return  modelAndView;
     }
     
@@ -93,7 +93,7 @@ public class OrganizationController extends BaseController {
      */
     @RequestMapping("/organization/add")
     public ModelAndView addPage(){
-        ModelAndView modelAndView = new ModelAndView("organization/form");
+        ModelAndView modelAndView = new ModelAndView("system/organization/form");
         modelAndView.addObject("organization", new Organization());
         return modelAndView;
     }
@@ -106,7 +106,7 @@ public class OrganizationController extends BaseController {
     public ModelAndView editPage(Organization organization){
         log.info("组织机构编辑页面");
         organization = organizationService.find(organization.getId());
-        ModelAndView modelAndView = new ModelAndView("organization/form");
+        ModelAndView modelAndView = new ModelAndView("system/organization/form");
         modelAndView.addObject("organization", organization);
         return modelAndView ;
     }

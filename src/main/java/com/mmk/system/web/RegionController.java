@@ -40,7 +40,7 @@ public class RegionController extends BaseController {
     @RequestMapping("/region/list")
     public ModelAndView list(){
         log.info("区域管理列表查询");
-        ModelAndView modelAndView = new ModelAndView("region/list");
+        ModelAndView modelAndView = new ModelAndView("system/region/list");
         return  modelAndView;
     }
     
@@ -99,7 +99,7 @@ public class RegionController extends BaseController {
      */
     @RequestMapping("/region/add")
     public ModelAndView addPage(){
-        ModelAndView modelAndView = new ModelAndView("region/form");
+        ModelAndView modelAndView = new ModelAndView("system/region/form");
         modelAndView.addObject("region", new Region());
         return modelAndView;
     }
@@ -112,7 +112,7 @@ public class RegionController extends BaseController {
     public ModelAndView editPage(Region region){
         log.info("区域管理编辑页面");
         region = regionService.find(region.getRegionId());
-        ModelAndView modelAndView = new ModelAndView("region/form");
+        ModelAndView modelAndView = new ModelAndView("system/region/form");
         modelAndView.addObject("region", region);
         return modelAndView ;
     }

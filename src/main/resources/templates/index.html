@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="edge" />
+
+<!-- [jQuery] -->
+<script src="http://g.yiqingo.com/easyui/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- [EasyUI] -->
+
+
+<link id="easyuiTheme" rel="stylesheet" href="http://g.yiqingo.com/easyui/themes/default/easyui.css" type="text/css" />
+<link id="icon" rel="stylesheet" href="http://g.yiqingo.com/easyui/themes/icon.css" type="text/css" />
+<link id="icon2" rel="stylesheet" href="/css/icons.css" type="text/css" />
+<link rel="stylesheet" href="/css/lightmvc.css" type="text/css" />
+<link rel="stylesheet" href="/css/style.css" type="text/css" />
+<script type="text/javascript" src="http://g.yiqingo.com/easyui/jquery.easyui.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="http://g.yiqingo.com/easyui/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
+<script type="text/javascript" src="/js/extJs.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+
+<title>一元拼团管理后台</title>
+</head>
+<body>
+    <div id="index_layout">
+        <div class="header" data-options="region:'north',border:false" style="height: 80px; padding: 10px; background-color: #4c6985;color:#fff;line-height:60px;" >
+           
+            <div style="float:right;height:50px;padding:0px;margin:0px; line-height:50px;">
+            <span style="float: right; padding-right: 20px;">欢迎 <b th:text="${username}">abc</b>&nbsp;&nbsp; 
+            <a href="javascript:void(0)" onclick="editUserPwd()" style="color: #fff">修改密码</a>&nbsp;&nbsp;
+            <a href="javascript:void(0)" onclick="logout()" style="color: #fff">安全退出</a>
+             &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="javascript:void(0)" onclick="clearcache()" style="color: #fff">清除缓存</a>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="#" class="easyui-splitbutton" data-options="menu:'#mm1',iconCls:'icon-edit'" style="color:#c7c7c7;margin-top:2px; margin-left:20px;">修改主题</a>
+            </span>
+            </div>
+             <h2>一元购后台管理系统</h2>   
+        </div>
+        
+        
+        <div id="dl-l" class="content" data-options="region:'west',split:true" title="主导航" style="width: 230px; overflow: hidden;overflow-y:auto; background:#41586e;color:#fff;">
+            <div class="well well-small" >
+                <ul id="layout_west_tree"></ul>
+            </div>
+        </div>
+        <div data-options="region:'center'" style="overflow: hidden;">
+            <div id="index_tabs" style="overflow: hidden;" >
+                <div title="首页" data-options="border:false" style="overflow: hidden;">
+                    <div style="padding:10px 0 10px 10px">
+                        <h2>系统介绍</h2>
+                        <div class="light-info">
+                            <div class="light-tip icon-tip"></div>
+                            <div>JAVA快速开发平台。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div data-options="region:'south',border:false" style="height: 30px;line-height:30px; overflow: hidden;text-align: center;background-color: #eee" >版权所有@</div>
+    </div>
+    
+    <!--[if lte IE 7]>
+    <div id="ie6-warning"><p>您正在使用 低版本浏览器，在本页面可能会导致部分功能无法使用。建议您升级到 <a href="http://www.microsoft.com/china/windows/internet-explorer/" target="_blank">Internet Explorer 8</a> 或以下浏览器：
+    <a href="http://www.mozillaonline.com/" target="_blank">Firefox</a> / <a href="http://www.google.com/chrome/?hl=zh-CN" target="_blank">Chrome</a> / <a href="http://www.apple.com.cn/safari/" target="_blank">Safari</a> / <a href="http://www.operachina.com/" target="_blank">Opera</a></p></div>
+    <![endif]-->
+    
+    <style>
+        /*ie6提示*/
+        #ie6-warning{width:100%;position:absolute;top:0;left:0;background:#fae692;padding:5px 0;font-size:12px}
+        #ie6-warning p{width:960px;margin:0 auto;}
+    </style>
+    
+    <div id="editUserPwd"></div>
+    
+    
+         <!--主题-->
+    <div id="mm1" style="width:150px;">
+        <div onclick="changeTheme('black');">black</div>
+        <div onclick="changeTheme('bootstrap');">bootstrap</div>
+        <div onclick="changeTheme('default');">default</div>
+        <div onclick="changeTheme('gray');">gray</div>
+        <div onclick="changeTheme('material');">material</div>
+    </div>
+    
+    
+<style>
+    /*滚动条 start*/  
+          ::-webkit-scrollbar {  
+            width: 4px;  
+            height: 4px;  
+            background-color: #F5F5F5;  
+          }  
+          /*定义滚动条轨道 内阴影+圆角*/  
+          ::-webkit-scrollbar-track {  
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);  
+            background: #fff ;  
+          }  
+          /*定义滑块 内阴影+圆角*/  
+          ::-webkit-scrollbar-thumb {  
+            border-radius: 3px;  
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);  
+            background-color:#40bbf4;  
+          }  
+
+
+
+</style>
+</body>
+</html>

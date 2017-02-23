@@ -47,7 +47,7 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/user/index")
 	public ModelAndView index() {
 		log.info("系统用户index");
-		ModelAndView modelAndView = new ModelAndView("user/index");
+		ModelAndView modelAndView = new ModelAndView("system/user/index");
 		return modelAndView;
 	}
 
@@ -90,7 +90,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping("/user/form")
 	public ModelAndView addPage(User user) {
-		ModelAndView modelAndView = new ModelAndView("user/form");
+		ModelAndView modelAndView = new ModelAndView("system/user/form");
 		// 如果存在id获取该用户信息
 		if (user.getId() != null) {
 			user = userService.find(user.getId());
@@ -110,7 +110,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping("/user/add")
 	public ModelAndView add() {
-		return new ModelAndView("user/form", "user", new User());
+		return new ModelAndView("system/user/form", "user", new User());
 	}
 
 	/**
@@ -292,7 +292,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping("/user/changePwdForm")
 	public ModelAndView changePwdForm() {
-		return new ModelAndView("user/changePwdForm");
+		return new ModelAndView("system/user/changePwdForm");
 	}
 
 	/**
@@ -303,7 +303,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping("/user/editPwdForm")
 	public ModelAndView changePwdForm(User user) {
-		ModelAndView modelAndView = new ModelAndView("user/editPwdForm");
+		ModelAndView modelAndView = new ModelAndView("system/user/editPwdForm");
 		modelAndView.addObject("id", user.getId());
 		return modelAndView;
 	}
@@ -316,7 +316,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping("/user/changeOrgForm")
 	public ModelAndView changeOrgForm(User user) {
-		ModelAndView modelAndView = new ModelAndView("user/changeOrgForm");
+		ModelAndView modelAndView = new ModelAndView("system/user/changeOrgForm");
 		modelAndView.addObject("id", user.getId());
 		modelAndView.addObject("user", userService.get(user.getId()));
 		return modelAndView;
