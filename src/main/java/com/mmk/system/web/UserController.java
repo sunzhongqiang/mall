@@ -22,9 +22,9 @@ import com.mmk.common.CurrentUser;
 import com.mmk.common.model.EasyPageable;
 import com.mmk.common.model.GridData;
 import com.mmk.common.model.ResultMsg;
-import com.mmk.system.condition.UserCondition;
-import com.mmk.system.model.User;
-import com.mmk.system.service.UserService;
+import com.mmk.user.condition.UserCondition;
+import com.mmk.user.model.User;
+import com.mmk.user.service.UserService;
 
 /**
  * UserController ： 系统用户 的web控制层 2016-10-12 11:54:23

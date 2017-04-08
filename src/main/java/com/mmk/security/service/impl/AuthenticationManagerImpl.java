@@ -19,11 +19,11 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Service;
 
 import com.mmk.system.model.LoginLog;
-import com.mmk.system.model.User;
 import com.mmk.system.model.UserRole;
 import com.mmk.system.service.LoginLogService;
 import com.mmk.system.service.UserRoleService;
-import com.mmk.system.service.UserService;
+import com.mmk.user.model.User;
+import com.mmk.user.service.UserService;
 
 @Service
 public class AuthenticationManagerImpl implements AuthenticationManager {
