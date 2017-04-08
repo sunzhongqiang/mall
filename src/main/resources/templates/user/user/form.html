@@ -1,0 +1,88 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="edge" />
+<link rel="shortcut icon" href="/style/images/index/favicon.png" />
+<script type="text/javascript">
+
+    $(function() {
+        $('#modelForm').on('submit', function(event){
+            var $form = $(this);
+            progressLoad();
+            var isValid = $form.form('validate');
+            if (!isValid) {
+                progressClose();
+                return isValid;
+            }
+            $.ajax({
+                url: '/user/user/save',
+                data: $form.serialize(),
+                success: function(result){
+                    progressClose();
+                    if (result.success) {
+                        parent.$.modalDialog.openner_dataGrid.datagrid('reload');//之所以能在这里调用到parent.$.modalDialog.openner_dataGrid这个对象，是因为user.jsp页面预定义好了
+                        parent.$.modalDialog.handler.dialog('close');
+                    } else {
+                        parent.$.messager.alert('提示', result.msg, 'warning');
+                    }
+                },
+                error: function(){
+                    progressClose();
+                    alert("系统错误");
+                }
+            });
+            return false;
+        });
+    });
+</script>
+<div class="easyui-layout" data-options="fit:true,border:false">
+    <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
+        <form id="modelForm" method="post">
+            <table class="grid">
+                    <tr>
+                        <td class="tdTit"><label>用户名（电话既用户）：</label></td>
+                        <td>
+                        <input type="text"  name="username"   class="easyui-validatebox" data-options="required:true" th:value="${user.username}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdTit"><label>真实名称：</label></td>
+                        <td>
+                        <input type="text"  name="realname"   class="easyui-validatebox" data-options="required:true" th:value="${user.realname}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdTit"><label>密码：</label></td>
+                        <td>
+                        <input type="text"  name="password"   class="easyui-validatebox" data-options="required:true" th:value="${user.password}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdTit"><label>微信绑定的openid：</label></td>
+                        <td>
+                        <input type="text"  name="openid"   class="easyui-validatebox" data-options="required:true" th:value="${user.openid}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdTit"><label>是否是商户：</label></td>
+                        <td>
+                        <input type="text"  name="isSeller"   class="easyui-validatebox" data-options="required:true" th:value="${user.isSeller}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdTit"><label>用户状态：enable,disable,启用禁用：</label></td>
+                        <td>
+                        <input type="text"  name="status"   class="easyui-validatebox" data-options="required:true" th:value="${user.status}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdTit"><label>创建日期：</label></td>
+                        <td><input id="" name="created" type="text" placeholder="点击选择时间" readonly="readonly" onfocus="WdatePicker();" th:value="${user.created}"/></td>
+                    </tr>
+                    <tr>
+                        <td class="tdTit"><label>变更日期：</label></td>
+                        <td><input id="" name="modified" type="text" placeholder="点击选择时间" readonly="readonly" onfocus="WdatePicker();" th:value="${user.modified}"/></td>
+                    </tr>
+            </table>
+            <input type="hidden" name="id" th:value="${user.id}"/>
+        </form>
+    </div>
+</div>
