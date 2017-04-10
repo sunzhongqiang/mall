@@ -15,7 +15,6 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.HttpClientConnectionManager;
@@ -30,7 +29,6 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.ssl.SSLContexts;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONObject;
 
 public class ApiClient {
 
@@ -152,38 +150,8 @@ public class ApiClient {
 		}
 		return null;
 	}
-	public static String postJson(String url, JSONObject  params) {
-		CloseableHttpClient createDefault = getClient();
-		CloseableHttpResponse response = null;
-		try {
-			HttpPost post = new HttpPost(url);
-			StringEntity entity = new StringEntity(params.toString(),"utf-8");
-			post.setEntity(entity);
-			// 执行请求
-			response = createDefault.execute(post);
-			// 处理返回结果
-			String result = EntityUtils.toString(response.getEntity(), "UTF-8");
-			return result;
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (null != response) {
-					response.close();
-				}
-				if (null != createDefault) {
-					createDefault.close();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return null;
-	}
+	
+	
 	
 	
 	public static String encodeUrl(String uri,Map<String,Object> params){
