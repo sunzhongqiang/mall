@@ -1,5 +1,5 @@
 /*
- *  ShopRepository 创建于 2017-04-08 08:37:20 版权归作者和作者当前组织所有
+ *  ShopRepository 创建于 2017-04-15 12:34:53 版权归作者和作者当前组织所有
  */
 package com.mmk.user.dao;
 
@@ -12,7 +12,7 @@ import com.mmk.user.model.Shop;
 
 /**
 * ShopRepository: 用户店铺 数据资源层
-* 2017-04-08 08:37:20
+* 2017-04-15 12:34:53
 * @author codegenerator
 * @version 1.0
 */

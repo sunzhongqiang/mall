@@ -29,6 +29,11 @@
             },
             {
                 width : '80',
+                title : '店铺状态：open:营业中;closed:关闭;',
+                field : 'status',
+            },
+            {
+                width : '80',
                 title : '经营范围',
                 field : 'shopDescription',
             },

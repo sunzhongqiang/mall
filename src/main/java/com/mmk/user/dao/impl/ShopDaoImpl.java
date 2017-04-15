@@ -1,6 +1,6 @@
 /*
  * 
- *  ShopDaoImpl 创建于 2017-04-08 08:37:20 版权归作者和作者当前组织所有
+ *  ShopDaoImpl 创建于 2017-04-15 12:34:53 版权归作者和作者当前组织所有
  */
 package com.mmk.user.dao.impl;
 
@@ -63,7 +63,7 @@ public class ShopDaoImpl extends SpringDataQueryDaoImpl<Shop> implements ShopDao
     
     @Override 
     public Page< Map<String,Object>> listBySql(ShopCondition condition,Pageable pageable){
-        StringBuffer sb=new StringBuffer("select id,user_id,title,shop_description,address from user_shop  where 1=1  ");
+        StringBuffer sb=new StringBuffer("select id,user_id,title,status,shop_description,address from user_shop  where 1=1  ");
         Map<Integer,Object> params = new HashMap<Integer,Object>();
         return queryFieldsBySql(sb.toString(), params, pageable);
     }

@@ -1,6 +1,6 @@
 /*
  * 
- *  Shop 创建于 2017-04-08 08:37:20 版权归作者和作者当前组织所有
+ *  Shop 创建于 2017-04-15 12:34:53 版权归作者和作者当前组织所有
  */
 package com.mmk.user.model;
 
@@ -13,7 +13,7 @@ import javax.persistence.Column;
 
 /**
 * Shop: 用户店铺 数据领域模型
-* 2017-04-08 08:37:20
+* 2017-04-15 12:34:53
 *@author codegenerator
 *@version 1.0
 */
@@ -39,6 +39,12 @@ public class Shop {
      */
     @Column(name="title",columnDefinition="COMMENT '店铺名称'")
     private String title;
+
+    /**
+     * 店铺状态：open:营业中;closed:关闭;
+     */
+    @Column(name="status",columnDefinition="COMMENT '店铺状态：open:营业中;closed:关闭;'")
+    private String status;
 
     /**
      * 经营范围
@@ -90,6 +96,19 @@ public class Shop {
     */
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    /** 
+	* @return status ：店铺状态：open:营业中;closed:关闭;
+	*/
+    public String getStatus() {
+        return status;
+    }
+    /** 
+    *@param status 设置店铺状态：open:营业中;closed:关闭; 
+    */
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     /** 

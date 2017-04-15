@@ -50,6 +50,12 @@
                         </td>
                     </tr>
                     <tr>
+                        <td class="tdTit"><label>店铺状态：open:营业中;closed:关闭;：</label></td>
+                        <td>
+                        <input type="text"  name="status"   class="easyui-validatebox" data-options="required:true" th:value="${shop.status}"/>
+                        </td>
+                    </tr>
+                    <tr>
                         <td class="tdTit"><label>经营范围：</label></td>
                         <td>
                         <input type="text"  name="shopDescription"   class="easyui-validatebox" data-options="required:true" th:value="${shop.shopDescription}"/>

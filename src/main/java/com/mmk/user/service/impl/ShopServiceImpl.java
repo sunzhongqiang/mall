@@ -17,7 +17,7 @@ import com.mmk.user.service.ShopService;
 import com.mmk.user.dao.ShopDao;
 /**
 * ShopServiceImpl: 用户店铺 业务服务层实现
-* 2017-04-08 08:37:20
+* 2017-04-15 12:34:53
 * @author codegenerator
 * @version 1.0
 */
