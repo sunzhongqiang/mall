@@ -129,7 +129,7 @@ public class ShopController {
     
     /**
      * 删除数据操作组方法
-     * @param page shop
+     * @param  shop
      * @return
      */
     @RequestMapping("/user/shop/delete")
@@ -146,7 +146,7 @@ public class ShopController {
     
     /**
      * 批量删除数据操作组方法
-     * @param page shop
+     * @param  shopList
      * @return ture or false 如果成功返回true ,出现错误返回false
      */
     @RequestMapping("/user/shop/deleteAll")

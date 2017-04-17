@@ -129,7 +129,7 @@ public class UserAddressController {
     
     /**
      * 删除数据操作组方法
-     * @param page userAddress
+     * @param userAddress
      * @return
      */
     @RequestMapping("/user/userAddress/delete")
@@ -146,7 +146,7 @@ public class UserAddressController {
     
     /**
      * 批量删除数据操作组方法
-     * @param page userAddress
+     * @param userAddressList
      * @return ture or false 如果成功返回true ,出现错误返回false
      */
     @RequestMapping("/user/userAddress/deleteAll")
