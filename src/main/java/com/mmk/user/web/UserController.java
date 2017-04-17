@@ -128,8 +128,10 @@ public class UserController extends BaseController {
 
 		// 判断id是否存在，如果不存在进行新增，否则进行编辑
 		if (user.getId() == null) {
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
 			user.setCreateTime(new Date());
 			user.setModifiedTime(new Date());
+			user.setPassword(encoder.encode(user.getPassword()));
 			user = userService.save(user);
 		} else {
 			User bean = userService.find(user.getId());
@@ -268,8 +270,7 @@ public class UserController extends BaseController {
 	/**
 	 * 修改密码逻辑
 	 * 
-	 * @param oldPwd 旧密码
-	 * @param pwd 新密码
+	 * @param user 旧密码
 	 * @return 处理结果
 	 */
 	@RequestMapping("/user/changeUserPwd")
