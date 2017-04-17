@@ -4,27 +4,22 @@
  */
 package com.mmk.goods.web;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.mmk.common.model.EasyPageable;
 import com.mmk.common.model.GridData;
 import com.mmk.common.model.ResultMsg;
+import com.mmk.goods.condition.CategoryCondition;
+import com.mmk.goods.model.Category;
+import com.mmk.goods.service.CategoryService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import com.mmk.goods.service.CategoryService;
-import com.mmk.goods.model.Category;
-import com.mmk.goods.condition.CategoryCondition;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
 *@Title: CategoryController
@@ -48,6 +43,20 @@ public class CategoryController {
         log.info("商品分类列表查询");
         ModelAndView modelAndView = new ModelAndView("goods/category/list");
         return  modelAndView;
+    }
+
+
+    /**
+     * 获取treeGrid的数据
+     * @param categoryCondition
+     * @return 树表数据
+     */
+    @RequestMapping("/category/treeGrid")
+    @ResponseBody
+    public List<CategoryCondition> loadTreeGrid(CategoryCondition categoryCondition){
+        log.info("获取商品分类列表数据");
+        List<CategoryCondition> treeGrid = categoryService.treeGrid(categoryCondition);
+        return treeGrid;
     }
     
     

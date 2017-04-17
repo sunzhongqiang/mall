@@ -1,31 +1,30 @@
 /*
  * 
- *  CategoryDaoImpl 创建于 2017-04-17 18:14:42 版权归作者和作者当前组织所有
+ *  CategoryDaoImpl 创建于 2016-11-29 13:54:25 版权归作者和作者当前组织所有
  */
 package com.mmk.goods.dao.impl;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.lang3.StringUtils;
-import javax.annotation.Resource;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-import com.mmk.gene.dao.impl.SpringDataQueryDaoImpl;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import com.mmk.goods.model.Category;
-import com.mmk.goods.dao.CategoryDao;
 
 import com.mmk.goods.condition.CategoryCondition;
+import com.mmk.goods.dao.CategoryDao;
+import com.mmk.goods.model.Category;
+import com.mmk.gene.dao.impl.SpringDataQueryDaoImpl;
 
 
 
 /**
 * CategoryDaoImpl: 商品分类 数据持久层接口实现
-*@author codegene
+*@author 孙中强 sunzhongqiang
 *@version 1.0
 *
 */
@@ -43,7 +42,7 @@ public class CategoryDaoImpl extends SpringDataQueryDaoImpl<Category> implements
      * @param categoryCondition 查询类
      * @param pageable 传入的分页对象
      * @return 符合条件的查询结果集
-     * @author codegene
+     * @author 孙中强 sunzhongqiang
      * 
      */
     @Override 
@@ -54,10 +53,11 @@ public class CategoryDaoImpl extends SpringDataQueryDaoImpl<Category> implements
             sb.append(" and model.name like :name ");
             params.put("name","%"+categoryCondition.getName()+"%");
         }
-        if(categoryCondition.getIsShow()!=null){
-            sb.append(" and model.isShow = :isShow ");
-            params.put("isShow",categoryCondition.getIsShow());
+        if(StringUtils.isNotBlank(categoryCondition.getPath())){
+            sb.append(" and model.path like :path ");
+            params.put("path","%"+categoryCondition.getPath()+"%");
         }
+        sb.append(" order by model.sortOrder ");
         return queryByJpql(sb.toString(), params, pageable);
     }
 
@@ -69,25 +69,26 @@ public class CategoryDaoImpl extends SpringDataQueryDaoImpl<Category> implements
             sb.append(" and model.name like :name ");
             params.put("name","%"+categoryCondition.getName()+"%");
         }
-        if(categoryCondition.getIsShow()!=null){
-            sb.append(" and model.isShow = :isShow ");
-            params.put("isShow",categoryCondition.getIsShow());
+        if(StringUtils.isNotBlank(categoryCondition.getPath())){
+            sb.append(" and model.path like :path ");
+            params.put("path","%"+categoryCondition.getPath()+"%");
         }
+        sb.append(" order by model.sortOrder ");
         return queryByJpql(sb.toString(), params);
     }
     
     
     @Override 
     public Page< Map<String,Object>> listBySql(CategoryCondition condition,Pageable pageable){
-        StringBuffer sb=new StringBuffer("select id,parent_id,name,path,sort_order,is_show,cat_ico,cat_logo from goods_category  where 1=1  ");
+        StringBuffer sb=new StringBuffer("select id,parent_id,name,path,sort_order,is_show,cat_ico,cat_logo from business_category  where 1=1  ");
         Map<Integer,Object> params = new HashMap<Integer,Object>();
         if(StringUtils.isNotBlank(condition.getName())){
             sb.append(" and name like ?3 ");
             params.put(3,"%"+condition.getName()+"%");
         }
-        if(condition.getIsShow()!=null){
-            sb.append(" and is_show = ?6 ");
-            params.put(6,condition.getIsShow());
+        if(StringUtils.isNotBlank(condition.getPath())){
+            sb.append(" and path like ?4 ");
+            params.put(4,"%"+condition.getPath()+"%");
         }
         return queryFieldsBySql(sb.toString(), params, pageable);
     }
@@ -112,6 +113,34 @@ public class CategoryDaoImpl extends SpringDataQueryDaoImpl<Category> implements
         params.put("value",value);
         return queryByJpql(sb.toString(), params);
     }
+
+	@Override
+	public List<Category> findAllBy(CategoryCondition categoryCondition) {
+		StringBuffer sb=new StringBuffer("select model from Category model  where 1=1  ");
+        Map<String,Object> params = new HashMap<String,Object>();
+        if(StringUtils.isNotBlank(categoryCondition.getName())){
+            sb.append(" and model.name like :name ");
+            params.put("name","%"+categoryCondition.getName()+"%");
+        }
+        if(StringUtils.isNotBlank(categoryCondition.getPath())){
+            sb.append(" and model.path like :path ");
+            params.put("path","%"+categoryCondition.getPath()+"%");
+        }
+        sb.append(" order by model.sortOrder ");
+		return queryByJpql(sb.toString(), params);
+	}
+
+	@Override
+	public List<Category> findChildrenByPath(String path) {
+		StringBuffer sb=new StringBuffer("select model from Category model  where 1=1  ");
+        Map<String,Object> params = new HashMap<String,Object>();
+        if(StringUtils.isNotBlank(path)){
+            sb.append(" and model.path like :path ");
+            params.put("path",path+"%");
+        }
+        sb.append(" order by model.sortOrder ");
+		return queryByJpql(sb.toString(), params);
+	}
     
     
 }
