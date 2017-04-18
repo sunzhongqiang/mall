@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mmk.common.CurrentUser;
 import com.mmk.common.model.EasyPageable;
 import com.mmk.common.model.GridData;
 import com.mmk.common.model.ResultMsg;
@@ -160,5 +161,24 @@ public class ShopController {
         }
         return true; 
     }
+    
+	/**
+	 * 获取当前用户的商铺信息，并返回到商铺设置页面
+	 * 
+	 * @return 商铺设置页面
+	 */
+	@RequestMapping("/user/shop/setting")
+	public ModelAndView setting() {
+		log.info("商铺设置页面");
+		Shop shop = shopService.findBy("id", CurrentUser.getUser().getId());
+		// 如果尚未设置，返回一个空设置
+		if (shop == null) {
+			shop = new Shop();
+		}
+		// 页面返回
+		ModelAndView modelAndView = new ModelAndView("user/shop/setting");
+		modelAndView.addObject("shop", shop);
+		return modelAndView;
+	}
     
 }
