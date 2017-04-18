@@ -112,7 +112,7 @@ $(function() {
             }] ],
         toolbar :  [{
             iconCls: 'icon-add',
-            text:'新增',
+            text:'发布商品',
             handler: function(){addFun();}
         }],
         onLoadSuccess : function(data){
@@ -124,20 +124,10 @@ $(function() {
 });
 
 function addFun() {
-    parent.$.modalDialog({
-        title : '添加',
-        width : 500,
-        height : 300,
-        href : '/goods/goods/add',
-        buttons : [ {
-            text : '添加',
-            handler : function() {
-                parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-                var f = parent.$.modalDialog.handler.find('#modelForm');
-                f.submit();
-            }
-        } ]
-    });
+	 parent.addTab({
+		url : '/goods/goods/add',
+		title : '商品发布',
+	},true);
 }
 
 function deleteFun(id) {
