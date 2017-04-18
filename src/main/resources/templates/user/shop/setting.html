@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="edge" />
+<!-- [jQuery] -->
+<script src="http://g.yiqingo.com/easyui/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- [EasyUI] -->
+<link id="easyuiTheme" rel="stylesheet" href="http://g.yiqingo.com/easyui/themes/gray/easyui.css" type="text/css" />
+<link id="icon" rel="stylesheet" href="http://g.yiqingo.com/easyui/themes/icon.css" type="text/css" />
+<link id="icon2" rel="stylesheet" href="/css/icons.css" type="text/css" />
+<link rel="stylesheet" href="/css/lightmvc.css" type="text/css" />
+<link rel="stylesheet" href="/css/style.css" type="text/css" />
+<script type="text/javascript" src="http://g.yiqingo.com/easyui/jquery.easyui.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="http://g.yiqingo.com/easyui/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
+
+<title>用户店铺</title>
+<script type="text/javascript" src="/js/extJs.js"></script>
+<link rel="shortcut icon" href="/style/images/index/favicon.png" />
+<script type="text/javascript">
+
+    $(function() {
+        $('#modelForm').on('submit', function(event){
+            var $form = $(this);
+            progressLoad();
+            var isValid = $form.form('validate');
+            if (!isValid) {
+                progressClose();
+                return isValid;
+            }
+            $.ajax({
+                url: '/user/shop/saveSetting',
+                data: $form.serialize(),
+                success: function(result){
+                    progressClose();
+                    if (result.success) {
+                    	parent.$.messager.alert('提示', result.msg, 'warning');
+                    } else {
+                        parent.$.messager.alert('提示', result.msg, 'warning');
+                    }
+                },
+                error: function(){
+                    progressClose();
+                    alert("系统错误");
+                }
+            });
+            return false;
+        });
+    });
+</script>
+</head>
+<body class="easyui-layout" data-options="fit:true,border:false">
+<div class="easyui-layout" data-options="fit:true,border:false">
+    <div data-options="region:'center',border:false" title="" style="overflow: hidden;padding: 3px;">
+        <form id="modelForm" method="post">
+            <table class="grid">
+                    <tr>
+                        <td class="tdTit"><label>店铺名称：</label></td>
+                        <td>
+                        <input type="text"  name="title" style="width:300px"   class="easyui-validatebox" data-options="required:true" th:value="${shop.title}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdTit"><label>店铺状态：</label></td>
+                        <td>
+                        <select id="cc" class="easyui-combobox" name="status" style="width:200px;">
+						    <option value="open" th:if="${shop.status} == 'open' ? 'selected' :'' ">营业中</option>
+						    <option value="closed" th:if="${shop.status} == 'closed' ? 'selected' :'' ">闭店</option>
+						</select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdTit"><label>经营范围：</label></td>
+                        <td>
+                        <input type="text"  name="shopDescription"   class="easyui-validatebox" data-options="required:true,multiline:true" th:value="${shop.shopDescription}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdTit"><label>实体店地址：</label></td>
+                        <td>
+                        <input type="text"  name="address"   class="easyui-validatebox" data-options="required:true" th:value="${shop.address}"/>
+                        </td>
+                    </tr>
+                     <tr>
+                        <td class="tdTit" colspan="2" align="center">
+                        	<input type="submit" value="保存" />
+                        </td>
+                    </tr>
+            </table>
+            <input type="hidden" name="id" th:value="${shop.id}"/>
+        </form>
+    </div>
+</div>
+</body>
+</html>

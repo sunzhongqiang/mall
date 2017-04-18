@@ -15,7 +15,7 @@
 <script type="text/javascript" src="http://g.yiqingo.com/easyui/jquery.easyui.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="http://g.yiqingo.com/easyui/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
 <script type="text/javascript" src="/webuploader/webuploader.min.js"></script>
-<script type="text/javascript" src="/js/goods/form.js"></script>
+<script type="text/javascript" src="/js/goods/goods/form.js"></script>
 <script type="text/javascript" src="/js/extJs.js"></script>
 <link rel="stylesheet" type="text/css" href="/webuploader/webuploader.css" />
 <title>管理后台</title>
@@ -35,19 +35,19 @@
                     <tr>
                         <td class="tdTit"><label>商品名称：</label></td>
                         <td>
-                        <input type="text"  name="goodsName"   class="easyui-validatebox mytextbox" data-options="required:true" th:value="${goods.goodsName}" style="width:300px;"/>
+                        <input type="text"  name="title"   class="easyui-validatebox mytextbox" data-options="required:true" th:value="${goods.title}" style="width:300px;"/>
                         </td>
                     </tr>
                     <tr>
                         <td class="tdTit"><label>商品数量：</label></td>
                         <td>
-                        <input type="text"  name="goodsNumber"   class="easyui-numberbox" data-options="required:true" th:value="${goods.goodsNumber}"/>
+                        <input type="text"  name="num"   class="easyui-numberbox" data-options="required:true" th:value="${goods.num}"/>
                         </td>
                     </tr>
                     <tr>
                         <td class="tdTit"><label>商品原价：</label></td>
                         <td>
-                        <input type="text"  name="goodsOriginalPrice"   class="easyui-numberbox" data-options="required:true" th:value="${goods.goodsOriginalPrice}"/>
+                        <input type="text"  name="originalPrice"   class="easyui-numberbox" data-options="required:true" th:value="${goods.originalPrice}"/>
                         </td>
                     </tr>
                     <tr>
@@ -100,13 +100,13 @@
 							    <div id="mainfile" class="uploader-list">
 							    	<div id="mainPicker">选择主图</div>
 							    	
-							    	<div  th:if="${goods.goodsMainImg}" class="file-item upload-state-done">
-							    	<img th:src="${goods.goodsMainImg}" />
+							    	<div  th:if="${goods.mainImg}" class="file-item upload-state-done">
+							    	<img th:src="${goods.mainImg}" />
 							    	<div class="diyCancel"></div>
 							    	</div>
 							    
 <!-- 							    	<input type="hidden" value="" name="goodsOriginalImg"></input> -->
-							    	<input type="hidden" th:value="${goods.goodsMainImg}" name="goodsMainImg"></input>
+							    	<input type="hidden" th:value="${goods.mainImg}" name="goodsMainImg"></input>
 <!-- 							    	<input type="hidden" value="" name="goodsThumb"></input> -->
 							    </div>
 							 	<dl>
@@ -137,7 +137,7 @@
 				         <td class="tdTit"></td>
 				         <td>
 				             <!-- 加载编辑器的容器 -->
-				            <script id="editor" name="goodsDesc" type="text/plain" th:utext="${goods.goodsDesc}"></script>
+				            <script id="editor" name="description" type="text/plain" th:utext="${goods.description}"></script>
 				            <!-- 配置文件 -->
 				            <script type="text/javascript" src="/ueditor/ueditor.config.js"></script>
 				            <!-- 编辑器源码文件 -->

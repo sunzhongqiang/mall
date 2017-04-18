@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="edge" />
+
+<!-- [jQuery] -->
+<script src="http://g.yiqingo.com/easyui/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- [EasyUI] -->
+<link id="easyuiTheme" rel="stylesheet" href="http://g.yiqingo.com/easyui/themes/gray/easyui.css" type="text/css" />
+<link id="icon" rel="stylesheet" href="http://g.yiqingo.com/easyui/themes/icon.css" type="text/css" />
+<link id="icon2" rel="stylesheet" href="/css/icons.css" type="text/css" />
+<link rel="stylesheet" href="/css/lightmvc.css" type="text/css" />
+<link rel="stylesheet" href="/css/style.css" type="text/css" />
+<script type="text/javascript" src="http://g.yiqingo.com/easyui/jquery.easyui.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="http://g.yiqingo.com/easyui/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
+
+<title>商品</title>
+<script type="text/javascript" src="/js/extJs.js"></script>
+<script type="text/javascript" src="/js/temp/goods/list.js"></script>
+</head>
+<body class="easyui-layout" data-options="fit:true,border:false">
+    <div data-options="region:'north',border:false" style="padding:10px; overflow: hidden;background-color: #fff">
+        <form id="searchForm">
+            <table>
+                <tr>
+
+                    <th>商品名称：</th>
+                      <td>
+                        <input type="text" name="title" th:value="${goodsCondition} ? ${goodsCondition.title} :''"/>
+                      </td>
+                  
+
+                        <th>商品价格：</th>
+                      <td>
+                        <input type="text" class="easyui-numberbox"  name="priceBegin" th:value="${goodsCondition} ? ${goodsCondition.priceBegin} :''"/>
+                      </td>
+                       <td>
+                       到： <input type="text" class="easyui-numberbox"  name="priceEnd" th:value="${goodsCondition} ? ${goodsCondition.priceEnd} :''"/>
+                      </td>
+                  
+
+                        <th>商品数量：</th>
+                      <td>
+                        <input type="text" class="easyui-numberbox"  name="numBegin" th:value="${goodsCondition} ? ${goodsCondition.numBegin} :''"/>
+                      </td>
+                       <td>
+                       到： <input type="text" class="easyui-numberbox"  name="numEnd" th:value="${goodsCondition} ? ${goodsCondition.numEnd} :''"/>
+                      </td>
+                  
+
+                    <th>商品编码：</th>
+                      <td>
+                        <input type="text" name="code" th:value="${goodsCondition} ? ${goodsCondition.code} :''"/>
+                      </td>
+                  
+
+                    <th>条形码：</th>
+                      <td>
+                        <input type="text" name="barcode" th:value="${goodsCondition} ? ${goodsCondition.barcode} :''"/>
+                      </td>
+                  
+
+                    <th>商品是否下架：</th>
+                      <td>
+                        <input type="text" name="isOnsale" th:value="${goodsCondition} ? ${goodsCondition.isOnsale} :''"/>
+                      </td>
+                  
+
+                    <th>添加时间：</th>
+                      <td>
+                        <input type="text" class="easyui-datebox"  name="createdBegin" th:value="${goodsCondition} ? ${goodsCondition.createdBegin} :''"/>
+                      </td>
+                       <td>
+                        <input type="text" class="easyui-datebox"  name="createdEnd" th:value="${goodsCondition} ? ${goodsCondition.createdEnd} :''"/>
+                      </td>
+                  
+                      <td>
+                        <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="searchFun();">查询</a>
+                        <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true" onclick="cleanFun();">清空</a>
+                      </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div data-options="region:'center',border:true,title:'商品'" >
+        <table id="dataGrid" data-options="fit:true,border:false"></table>
+    </div>
+</body>
+</html>
