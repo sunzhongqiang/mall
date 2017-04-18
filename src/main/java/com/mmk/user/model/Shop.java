@@ -24,7 +24,6 @@ public class Shop {
      * 主键
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id",columnDefinition="COMMENT '主键'")
     private Long id;
 

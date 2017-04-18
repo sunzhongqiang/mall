@@ -180,5 +180,27 @@ public class ShopController {
 		modelAndView.addObject("shop", shop);
 		return modelAndView;
 	}
+	
+	/**
+	 * 保存店铺的设置
+	 * 
+	 * @param shop
+	 *            店铺数据信息
+	 * @return 保存结果
+	 */
+	@RequestMapping("/user/shop/saveSetting")
+	@ResponseBody
+	public ResultMsg saveSetting(Shop shop) {
+		log.info("店铺设置数据保存");
+		try {
+			shop.setId(CurrentUser.getUser().getId());
+			shop.setUserId(CurrentUser.getUser().getId());
+			shopService.save(shop);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return new ResultMsg(false, "用户店铺保存失败");
+		}
+		return new ResultMsg(true, "用户店铺保存成功");
+	}
     
 }
