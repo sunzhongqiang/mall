@@ -193,13 +193,13 @@
         
         
         $("#modelForm").form({
-            url: '/goods/save',
+            url: '/goods/goods/save',
             onSubmit: function(param){   
             	 return $("#modelForm").form('validate')
             },   
             success:function(goods){
             	var goods = JSON.parse(goods);
-            	var url = '/goodsSku/save?goodsId='+goods.id;
+            	var url = '/goods/sku/save?goodsId='+goods.id;
                 $.ajax({
                 	  type: 'POST',
                 	  contentType: "application/json;charset=utf-8", 

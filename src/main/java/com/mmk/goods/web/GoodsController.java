@@ -12,10 +12,12 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -108,10 +110,41 @@ public class GoodsController {
      */
     @RequestMapping("/goods/goods/save")
     @ResponseBody
-    public ResultMsg save(Goods goods){
+    public ResultMsg save(@Valid Goods goods , BindingResult result ,
+    		String[] originalImg,String[] smallThumbImg,String[] bigThumbImg){
         log.info("商品保存");
         try {
-            goodsService.save(goods);
+        	Goods good  = goodsService.find(goods.getId());
+        	if(good != null){
+        	    goods.setId(good.getId());
+        	}
+    	    goodsService.save(goods); 
+    	    //商品图片保存
+//    		List<GoodsImg>  goodImgList = goodsImgService.findByGoodsId(goods.getId());
+//    	    
+//        	int imgLength = 0;
+//    	    if(originalImg != null){
+//    	    	imgLength = originalImg.length;
+//    	        // 商品相册的保存
+//    		    for(int i=0; i<originalImg.length; i++){
+//    		    	GoodsImg goodImg = new GoodsImg();
+//    			    if(goodImgList.size() != 0 && goodImgList.size() >= i+1){	
+//    		    		goodImg = goodImgList.get(i);	    	
+//    			    }
+//    		    	goodImg.setGoodsId(goods.getId());
+//    			    goodImg.setOriginalImg(originalImg[i]);
+//    			    goodImg.setBigThumbImg(bigThumbImg[i]);
+//    			    goodImg.setSmallThumbImg(smallThumbImg[i]);
+//    			    goodsImgService.save(goodImg);
+//    		    }
+//    	    }
+//    	    
+//    	    if(goodImgList.size() > imgLength){
+//    	    	for(int j =imgLength; j< goodImgList.size(); j++){
+//    	    		goodsImgService.delete(goodImgList.get(j));
+//    	    	}
+//    	    }
+              
         } catch (Exception e) {
         	log.error(e.getMessage(),e);
             return new ResultMsg(false,"商品保存失败");
@@ -177,7 +210,6 @@ public class GoodsController {
     @RequestMapping(value = "/goods/goods/upload")
     @ResponseBody
     public Map<String,Object> upload(MultipartFile file,String callback){
-   	 long start = System.currentTimeMillis();
         Map<String, Object> result = new HashMap<String,Object>();
         File dest;
         File size60;
