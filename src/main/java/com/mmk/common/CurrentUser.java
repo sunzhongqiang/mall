@@ -27,4 +27,18 @@ public class CurrentUser {
 		return  SecurityContextHolder.getContext().getAuthentication();
 	}
 	
+	public static String getUsername(){
+		Object details = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if(details == null){
+			return "null";
+		}
+		if(details instanceof User){
+			User user = (User) details;
+			return user.getRealname();
+		}else{
+			org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) details;
+			return user.getUsername();
+		}
+	}
+	
 }

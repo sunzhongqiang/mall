@@ -33,7 +33,7 @@ public class IndexController extends BaseController {
 	public ModelAndView index(HttpServletRequest request) {
 
 		ModelAndView modelAndView = new ModelAndView("index");
-		modelAndView.addObject("username", request.getRemoteUser());
+		modelAndView.addObject("username", CurrentUser.getUsername());
 		return modelAndView;
 	}
 

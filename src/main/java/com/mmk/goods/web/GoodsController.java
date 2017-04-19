@@ -4,7 +4,12 @@
  */
 package com.mmk.goods.web;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -14,11 +19,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mmk.common.model.EasyPageable;
 import com.mmk.common.model.GridData;
 import com.mmk.common.model.ResultMsg;
+import com.mmk.common.tool.FileClient;
+import com.mmk.common.tool.ThumbTool;
 import com.mmk.goods.condition.GoodsCondition;
 import com.mmk.goods.model.Goods;
 import com.mmk.goods.model.Sku;
@@ -158,6 +166,39 @@ public class GoodsController {
             return false;
         }
         return true; 
+    }
+    
+    /**
+     * 商品图片上传
+     * @param file 文件
+     * @param callback 返回地址
+     * @return 上传结果
+     */
+    @RequestMapping(value = "/goods/goods/upload")
+    @ResponseBody
+    public Map<String,Object> upload(MultipartFile file,String callback){
+   	 long start = System.currentTimeMillis();
+        Map<String, Object> result = new HashMap<String,Object>();
+        File dest;
+        File size60;
+        File size440;
+        if(file.getSize()>0){
+            try {
+               dest = Files.write(Files.createTempFile("copy", "temp"), file.getBytes()).toFile();
+               size60 = ThumbTool.size(dest, 350, 350);
+               size440 = ThumbTool.size(dest, 600, 600);
+               result = FileClient.getDefault().uploadGoods("originalimg", file.getOriginalFilename(), dest,"goodsimg", size440, "thumbimg", size60);
+               result.put("success", true);
+           } catch (IOException e) {
+               result.put("success", false);
+               result.put("message", e.getMessage());
+               e.printStackTrace();
+           }
+           dest = null;
+           size60 = null;
+           size440 = null;
+       }
+       return result ;
     }
     
 }
