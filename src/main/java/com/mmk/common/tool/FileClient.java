@@ -104,7 +104,6 @@ public class FileClient {
 			e.printStackTrace();
 		}finally{
 			try {
-				System.out.println("--打印释放资源----"+body.getBytes());
 				if(null!=response){
 					response.close();
 				}
