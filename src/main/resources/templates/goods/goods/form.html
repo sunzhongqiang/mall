@@ -203,7 +203,8 @@
                 	  type: 'POST',
                 	  contentType: "application/json;charset=utf-8", 
                 	  url: url ,
-                	  data: JSON.stringify(store.data.rows),
+                	  data: JSON.stringify(
+.data.rows),
                 	  success: function(data){
                 		  console.log("skusave",data);
                 	  }

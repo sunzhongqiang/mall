@@ -49,11 +49,6 @@ $(function() {
             },
             {
                 width : '80',
-                title : '商品详情',
-                field : 'description',
-            },
-            {
-                width : '80',
                 title : '商品原价',
                 field : 'originalPrice',
             },

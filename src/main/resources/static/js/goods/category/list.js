@@ -1,34 +1,31 @@
 //代码生成工具自动生成，请在此处填写 查询页面使用的js代码
-    var dataGrid;
+    var treeGrid;
     $(function() {
-        dataGrid = $('#dataGrid').datagrid({
-            url : '/goods/category/gridData',
+        treeGrid = $('#treeGrid').treegrid({
+            url : '/category/treeGrid',
             fit : true,
             striped : true,
             rownumbers : true,
             pagination : true,
             singleSelect : true,
             idField : 'id',
+            treeField : 'name',
             pageSize : 50,
             pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],
             columns : [ [ 
+           
+            {
+                width : '180',
+                title : '分类名称',
+                field : 'name',
+            }, 
             {
                 width : '80',
                 title : '分类id',
                 field : 'id',
             },
             {
-                width : '80',
-                title : '父分类的id',
-                field : 'parentId',
-            },
-            {
-                width : '80',
-                title : '分类名称',
-                field : 'name',
-            },
-            {
-                width : '80',
+                width : '280',
                 title : '分类路径',
                 field : 'path',
             },
@@ -41,6 +38,9 @@
                 width : '80',
                 title : '是否显示',
                 field : 'isShow',
+                formatter : function(value, row, index) {
+                	return value == 0 ? '隐藏' : '显示' ; 
+                }
             },
             {
                 width : '80',
@@ -73,7 +73,7 @@
             onLoadSuccess : function(data){
                 $('.btn_edit').linkbutton({text:'编辑',plain:true,iconCls:'icon-edit'});
                 $('.btn_delete').linkbutton({text:'删除',plain:true,iconCls:'icon-del'});
-                $(this).datagrid('fixRowHeight');
+                $(this).treegrid('fixRowHeight');
             }
         });
     });
@@ -82,12 +82,12 @@
         parent.$.modalDialog({
             title : '添加',
             width : 500,
-            height : 300,
-            href : '/goods/category/add',
+            height : 500,
+            href : '/category/add',
             buttons : [ {
                 text : '添加',
                 handler : function() {
-                    parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+                    parent.$.modalDialog.openner_treeGrid = treeGrid;//因为添加成功之后，需要刷新这个treeGrid，所以先预定义好
                     var f = parent.$.modalDialog.handler.find('#modelForm');
                     f.submit();
                 }
@@ -97,20 +97,20 @@
     
     function deleteFun(id) {
         if (id == undefined) {//点击右键菜单才会触发这个
-            var rows = dataGrid.datagrid('getSelections');
+            var rows = treeGrid.treegrid('getSelections');
             id = rows[0].id;
         } else {//点击操作里面的删除图标会触发这个
-            dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
+            treeGrid.treegrid('unselectAll').treegrid('uncheckAll');
         }
         parent.$.messager.confirm('询问', '您是否要删除商品分类？', function(b) {
             if (b) {
                 progressLoad();
-                    $.post('/goods/category/delete', {
+                    $.post('/category/delete', {
                         id : id
                     }, function(result) {
                         if (result.success) {
                             parent.$.messager.alert('提示', result.msg, 'info');
-                            dataGrid.datagrid('reload');
+                            treeGrid.treegrid('reload');
                         }
                         progressClose();
                     }, 'JSON');
@@ -120,20 +120,20 @@
     
     function editFun(id) {
         if (id == undefined) {
-            var rows = dataGrid.datagrid('getSelections');
+            var rows = treeGrid.treegrid('getSelections');
             id = rows[0].id;
         } else {
-            dataGrid.datagrid('unselectAll').datagrid('uncheckAll');
+            treeGrid.treegrid('unselectAll').treegrid('uncheckAll');
         }
         parent.$.modalDialog({
             title : '编辑',
             width : 500,
-            height : 300,
-            href : '/goods/category/edit?id=' + id,
+            height : 500,
+            href : '/category/edit?id=' + id,
             buttons : [ {
                 text : '编辑',
                 handler : function() {
-                    parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+                    parent.$.modalDialog.openner_treeGrid = treeGrid;//因为添加成功之后，需要刷新这个treeGrid，所以先预定义好
                     var f = parent.$.modalDialog.handler.find('#modelForm');
                     f.submit();
                 }
@@ -144,12 +144,11 @@
     
     function searchFun() {
         ////将searchForm表单内的元素序列为对象传递到后台
-        dataGrid.datagrid('load', $.serializeObject($('#searchForm')));
+        treeGrid.treegrid('load', $.serializeObject($('#searchForm')));
     }
     function cleanFun() {
         //找到form表单下的所有input标签并清空
         $('#searchForm input').val('');
         //重新加载数据，无填写数据，向后台传递值则为空
-        dataGrid.datagrid('load', {});
+        treeGrid.treegrid('load', {});
     }
-    
