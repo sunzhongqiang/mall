@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mmk.common.CurrentUser;
 import com.mmk.common.model.EasyPageable;
 import com.mmk.common.model.GridData;
 import com.mmk.common.model.ResultMsg;
@@ -114,10 +115,7 @@ public class GoodsController {
     		String[] originalImg,String[] smallThumbImg,String[] bigThumbImg){
         log.info("商品保存");
         try {
-        	Goods good  = goodsService.find(goods.getId());
-        	if(good != null){
-        	    goods.setId(good.getId());
-        	}
+        	goods.setUserId(CurrentUser.getUser().getId());
     	    goodsService.save(goods); 
     	    //商品图片保存
 //    		List<GoodsImg>  goodImgList = goodsImgService.findByGoodsId(goods.getId());
