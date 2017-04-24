@@ -2,7 +2,7 @@
     var treeGrid;
     $(function() {
         treeGrid = $('#treeGrid').treegrid({
-            url : '/category/treeGrid',
+            url : '/goods/category/treeGrid',
             fit : true,
             striped : true,
             rownumbers : true,

@@ -51,7 +51,7 @@ public class CategoryController {
      * @param categoryCondition
      * @return 树表数据
      */
-    @RequestMapping("/category/treeGrid")
+    @RequestMapping("/goods/category/treeGrid")
     @ResponseBody
     public List<CategoryCondition> loadTreeGrid(CategoryCondition categoryCondition){
         log.info("获取商品分类列表数据");
