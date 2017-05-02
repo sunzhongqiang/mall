@@ -83,7 +83,7 @@
             title : '添加',
             width : 500,
             height : 500,
-            href : '/category/add',
+            href : '/goods/category/add',
             buttons : [ {
                 text : '添加',
                 handler : function() {
@@ -105,7 +105,7 @@
         parent.$.messager.confirm('询问', '您是否要删除商品分类？', function(b) {
             if (b) {
                 progressLoad();
-                    $.post('/category/delete', {
+                    $.post('/goods/category/delete', {
                         id : id
                     }, function(result) {
                         if (result.success) {
@@ -129,7 +129,7 @@
             title : '编辑',
             width : 500,
             height : 500,
-            href : '/category/edit?id=' + id,
+            href : '/goods/category/edit?id=' + id,
             buttons : [ {
                 text : '编辑',
                 handler : function() {

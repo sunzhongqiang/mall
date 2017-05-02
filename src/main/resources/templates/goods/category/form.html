@@ -16,7 +16,7 @@
                 return isValid;
             }
             $.ajax({
-                url: '/category/save',
+                url: '/goods/category/save',
                 data: $form.serialize(),
                 success: function(result){
                     progressClose();
@@ -46,7 +46,7 @@
                         <input class="easyui-combotreegrid" name="parentId" th:unless="${category.id}"  data-options="
                                 width:'150',
                                 panelWidth:150,
-                                url:'/category/treeGrid',
+                                url:'/goods/category/treeGrid',
                                 idField:'id',
                                 treeField:'name',
                                 columns:[[
