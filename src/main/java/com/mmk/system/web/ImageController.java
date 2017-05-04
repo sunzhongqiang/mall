@@ -5,9 +5,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mmk.common.tool.FileClient;
+import com.mmk.common.util.VerifyCodeUtil;
 
 @Controller
 @RestController
@@ -74,5 +82,23 @@ public class ImageController {
 		}
 
 		return map;
+	}
+	
+	@RequestMapping("/verifycode")
+	public void  verifyCode(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		response.setHeader("Pragma", "No-cache"); 
+        response.setHeader("Cache-Control", "no-cache"); 
+        response.setDateHeader("Expires", 0); 
+        response.setContentType("image/jpeg"); 
+		 //生成随机字串 
+        String verifyCode = VerifyCodeUtil.generateVerifyCode(4); 
+        //存入会话session 
+        HttpSession session = request.getSession(true); 
+        //删除以前的
+        session.removeAttribute("verCode");
+        session.setAttribute("verCode", verifyCode.toLowerCase()); 
+        //生成图片 
+        int w = 100, h = 40; 
+        VerifyCodeUtil.outputImage(w, h, response.getOutputStream(), verifyCode); 
 	}
 }

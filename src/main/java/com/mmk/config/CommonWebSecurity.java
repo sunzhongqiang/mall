@@ -54,7 +54,7 @@ public class CommonWebSecurity extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers("/resources/**", "/css/**", "/ueditor/**", "/webuploader/**", "/style/**", "/js/**",
-				"/api/**","/weixin/**", "/images/**", "/Javascript/**", "/img/**", "/favicon.ico","/miniuiscripts/**","/easyui/**");
+				"/api/**","/weixin/**", "/images/**", "/Javascript/**", "/img/**", "/favicon.ico","/miniuiscripts/**","/easyui/**","/verifycode");
 	}
 
 	protected void configure(HttpSecurity http) throws Exception {
