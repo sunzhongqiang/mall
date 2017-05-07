@@ -62,33 +62,10 @@
                         <input type="text"  name="saledNumber"   class="easyui-numberbox"  th:value="${goods.saledNumber}"/>
                         </td>
                     </tr>
-<!--                     <tr> -->
-<!--                         <td class="tdTit"><label>商品相册：</label></td> -->
-<!--                         <td> -->
-<!--                         <input type="text"  name="goodsThumb"   class="easyui-validatebox" data-options="required:true" th:value="${goods.goodsThumb}"/> -->
-<!--                         </td> -->
-<!--                     </tr> -->
-<!--                     <tr> -->
-<!--                         <td class="tdTit"><label>商品主图：</label></td> -->
-<!--                         <td> -->
-<!--                         <input type="text"  name="goodsMainImg"   class="easyui-validatebox" data-options="required:true" th:value="${goods.goodsMainImg}"/> -->
-<!--                         </td> -->
-<!--                     </tr> -->
-<!--                     <tr> -->
-<!--                         <td class="tdTit"><label>商品原图：</label></td> -->
-<!--                         <td> -->
-<!--                         <input type="text"  name="goodsOriginalImg"   class="easyui-validatebox" data-options="required:true" th:value="${goods.goodsOriginalImg}"/> -->
-<!--                         </td> -->
-<!--                     </tr> -->
                     <tr>
                         <td class="tdTit"><label>商品是否下架：</label></td>
                         <td>
-                       <!--  <select name="isOnsale" class="easyui-combobox"    required="required"  data-options="width:140,height:29,editable:false,panelHeight:'auto'">
-	                            <option th:selected="${goods.isOnsale} == '0' ? 'selected' " value="0" >上架</option>
-	                            <option th:selected="${goods.isOnsale} == '1' ? 'selected' "  value="1">下架</option>
-	                       </select> -->
 	                       <input class="easyui-switchbutton" name="isOnsale" th:checked="${goods.isOnsale} == null ? true : ${goods.isOnsale} " required="required" data-options="onText:'上架',offText:'下架',value:true" />
-<!--                         <input type="text"  name="isOnsale"   class="easyui-validatebox" data-options="required:true" th:value="${goods.isOnsale}"/> -->
                         </td>
                     </tr>
                   
@@ -105,9 +82,7 @@
 							    	<div class="diyCancel"></div>
 							    	</div>
 							    
-<!-- 							    	<input type="hidden" value="" name="goodsOriginalImg"></input> -->
-							    	<input type="hidden" th:value="${goods.mainImg}" name="goodsMainImg"></input>
-<!-- 							    	<input type="hidden" value="" name="goodsThumb"></input> -->
+							    	<input type="hidden" th:value="${goods.mainImg}" name="mainImg"></input>
 							    </div>
 							 	<dl>
 									<dt>提示：</dt>
@@ -197,16 +172,16 @@
             	 return $("#modelForm").form('validate')
             },   
             success:function(goods){
-            	var goods = JSON.parse(goods);
-            	var url = '/goods/sku/save?goodsId='+goods.id;
+            	var result = JSON.parse(goods);
+            	var url = '/goods/sku/save?goodsId='+result.message.goods.id;
+            	console.log('store.data.rows',store.data.rows);
                 $.ajax({
                 	  type: 'POST',
                 	  contentType: "application/json;charset=utf-8", 
                 	  url: url ,
-                	  data: JSON.stringify(
-.data.rows),
+                	  data: JSON.stringify(store.data.rows),
                 	  success: function(data){
-                		  console.log("skusave",data);
+                		  //console.log("skusave",data);
                 	  }
                });
                parent.refreshTab("商品列表");
@@ -241,11 +216,7 @@
 $(document).ready(function(){
 	var goodsId = [[${goods.id}]];
 	if(goodsId){
-		$.get("/goodsSku/findSku?goodsId="+goodsId,function(data,status){
-			for(var index in data){
-				store.add(data[index]);
-			}
-		});
+		loadSku(goodsId);
 	}
 });
 </script>   

@@ -89,9 +89,9 @@
     };
     
     function addFun(id) {
-    	var url = '/goodsSku/add';
+    	var url = '/goods/sku/add';
     	if(id){
-    		url = '/goodsSku/add?goodsId='+id;
+    		url = '/goods/sku/add?goodsId='+id;
     	}
         parent.$.modalDialog({
             title : '添加',
@@ -103,6 +103,7 @@
                 handler : function() {
                     var f = parent.$.modalDialog.handler.find('#skuForm');
                 	var object = getFormJson(f);
+                	console.log('sku value',object);
                 	store.add(object);
                 	parent.$.modalDialog.handler.dialog('close');
                 }
@@ -114,7 +115,7 @@
     	var item = store.get(id);
     	console.log(item);
     	if(item.id){
-    		$.get("/goodsSku/delete?id="+item.id,function(data){
+    		$.get("/goods/sku/delete?id="+item.id,function(data){
     			store.remove(id);
     		});
     	}else{
@@ -123,9 +124,9 @@
     }
     
     function editFun(id) {
-    	var url = '/goodsSku/add';
+    	var url = '/goods/sku/add';
     	if(id){
-    		url = '/goodsSku/add?goodsId='+id;
+    		url = '/goods/sku/add?goodsId='+id;
     	}
     	parent.$.modalDialog({
             title : '添加',
@@ -158,5 +159,14 @@
         $('#searchForm input').val('');
         //重新加载数据，无填写数据，向后台传递值则为空
         dataGrid.datagrid('load', {});
+    }
+    
+    
+    function loadSku(goodsId){
+    	$.get("/goods/sku/findSku?goodsId="+goodsId,function(data,status){
+			for(var index in data){
+				store.add(data[index]);
+			}
+		});
     }
     

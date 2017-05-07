@@ -4,27 +4,25 @@
  */
 package com.mmk.goods.web;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
-import org.springframework.web.bind.annotation.ResponseBody;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mmk.common.model.EasyPageable;
 import com.mmk.common.model.GridData;
 import com.mmk.common.model.ResultMsg;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import com.mmk.goods.service.SkuService;
-import com.mmk.goods.model.Sku;
 import com.mmk.goods.condition.SkuCondition;
+import com.mmk.goods.model.Sku;
+import com.mmk.goods.service.SkuService;
 
 /**
 *@Title: SkuController
@@ -70,6 +68,18 @@ public class SkuController {
     }
     
     /**
+     * 商品ID获取商品的所有属性
+     * @param goodsId  商品主键
+     * @return skuList 查询到的商品属性
+     */
+    @RequestMapping("/goods/sku/findSku")
+    @ResponseBody
+    public List<Sku> findSkuByGoodsId(Long goodsId){
+        log.info("商品ID获取商品的所有属性");
+        return skuService.findAllByGoodsId(goodsId);
+    }
+    
+    /**
      * 新增页面
      * @return 跳转到商品SKU新增页面
      */
@@ -101,10 +111,13 @@ public class SkuController {
      */
     @RequestMapping("/goods/sku/save")
     @ResponseBody
-    public ResultMsg save(Sku sku){
+    public ResultMsg save(@RequestBody List<Sku> skuList,Long goodsId){
         log.info("商品SKU保存");
         try {
-            skuService.save(sku);
+        	 for (Sku goodsSku : skuList){
+             	goodsSku.setGoodsId(goodsId);
+                skuService.save(goodsSku);
+             }
         } catch (Exception e) {
         	log.error(e.getMessage(),e);
             return new ResultMsg(false,"商品SKU保存失败");

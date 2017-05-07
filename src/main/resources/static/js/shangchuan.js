@@ -172,16 +172,16 @@ var delThumb = "";
 //当有文件添加进来的时候
 mainUploader.on( 'fileQueued', function( file ) {
 	$("#mainfile .file-item").remove();
-    var $li = $(
+    var imageContent = $(
             '<div id="' + file.id + '"  class="file-item">' +
                 '<img>'+
                 //'<div class="info">' + file.name + '</div>' +
                 '<div class="diyCancel">'+'</div>'+
           '</div>'
             ),
-        $img = $li.find('img');
+        $img = imageContent.find('img');
     // $list为容器jQuery实例
-    $mainFile.append( $li );
+    $mainFile.append( imageContent );
     // 创建缩略图
     // 如果为非图片文件，可以不用调用此方法。
     // thumbnailWidth x thumbnailHeight 为 100 x 100
@@ -199,9 +199,7 @@ mainUploader.on( 'uploadSuccess', function(file, response) {
 	 var li = $( '#'+file.id );
 	 var mainDiv = $('#mainfile');
 	if (response.success) {
-		mainDiv.find("[ name = 'goodsMainImg' ]").attr("value", response.goodsImgArr);
-//		mainDiv.find("[ name = 'goodsOriginalImg' ]").attr("value", response.originalImgArr);
-//		mainDiv.find("[ name = 'goodsThumbimg' ]").attr("value", response.thumbimg);
+		mainDiv.find("[ name = 'mainImg' ]").attr("value", response.goodsImgArr);
 	    li.addClass('upload-state-done');
 	} else {
 		li.append("<p>上传失败</p>");

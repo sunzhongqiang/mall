@@ -1,12 +1,13 @@
 package com.mmk.goods.service;
 
-import java.util.Date;
 import java.util.List;
-import com.mmk.gene.service.BaseService;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import com.mmk.goods.model.Sku;
+
+import com.mmk.gene.service.BaseService;
 import com.mmk.goods.condition.SkuCondition;
+import com.mmk.goods.model.Sku;
 
 /**
 * SkuService: 商品SKU 业务服务层接口
@@ -72,4 +73,5 @@ public interface SkuService extends BaseService<Sku, Long> {
      * 
      */
     List<Sku> findAllBy(String field,Object value);
+
 }

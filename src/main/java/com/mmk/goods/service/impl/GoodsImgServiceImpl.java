@@ -76,4 +76,10 @@ public class GoodsImgServiceImpl extends BaseServiceImpl<GoodsImg, Long> impleme
         log.info("商品图片根据字["+field+"="+value+"] 进行查询符合条件的所有记录");
         return goodsImgDao.findAllBy(field,value);
     }
+    
+    @Override
+	public List<GoodsImg> findByGoodsId(Long id) {
+        log.info("根据商品ID查找相册");
+        return goodsImgDao.findByGoodsId(id);
+	}
 }

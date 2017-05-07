@@ -71,7 +71,7 @@ public class FileClient {
 	 * @return 返回默认配置的图片服务器客户端
 	 */
 	public static FileClient getDefault() {
-		return new FileClient("img.yiqingo.com", 80, "/upload");
+		return new FileClient("img.manmankuai.com", 80, "/upload");
 	}
 
 	/**

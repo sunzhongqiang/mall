@@ -32,8 +32,11 @@ import com.mmk.common.tool.FileClient;
 import com.mmk.common.tool.ThumbTool;
 import com.mmk.goods.condition.GoodsCondition;
 import com.mmk.goods.model.Goods;
+import com.mmk.goods.model.GoodsImg;
 import com.mmk.goods.model.Sku;
+import com.mmk.goods.service.GoodsImgService;
 import com.mmk.goods.service.GoodsService;
+import com.mmk.goods.service.SkuService;
 
 /**
 *@Title: GoodsController
@@ -47,6 +50,10 @@ public class GoodsController {
     
     @Resource 
     private GoodsService goodsService;
+    @Resource 
+    private GoodsImgService goodsImgService;
+    @Resource 
+    private SkuService skuService;
 
     /**
      * 跳转至列表页面
@@ -96,10 +103,18 @@ public class GoodsController {
      */ 
     @RequestMapping("/goods/goods/edit")
     public ModelAndView editPage(Goods goods){
-        log.info("商品编辑页面");
+    	log.info("商品编辑页面");
+    	
+    	ModelAndView modelAndView = new ModelAndView("goods/goods/form");
+    	
         goods = goodsService.find(goods.getId());
-        ModelAndView modelAndView = new ModelAndView("goods/goods/form");
         modelAndView.addObject("goods", goods);
+        
+        List<Sku> goodsSku = skuService.findAllByGoodsId(goods.getId());
+        modelAndView.addObject("skuList", goodsSku);
+        List<GoodsImg> goodsImgList = goodsImgService.findByGoodsId(goods.getId());
+        modelAndView.addObject("imgList", goodsImgList);
+        
         return modelAndView ;
     }
     
@@ -111,43 +126,45 @@ public class GoodsController {
      */
     @RequestMapping("/goods/goods/save")
     @ResponseBody
-    public ResultMsg save(@Valid Goods goods , BindingResult result ,
+    public ResultMsg save(@Valid Goods goods , BindingResult result ,String mainImg,
     		String[] originalImg,String[] smallThumbImg,String[] bigThumbImg){
         log.info("商品保存");
         try {
         	goods.setUserId(CurrentUser.getUser().getId());
     	    goodsService.save(goods); 
     	    //商品图片保存
-//    		List<GoodsImg>  goodImgList = goodsImgService.findByGoodsId(goods.getId());
-//    	    
-//        	int imgLength = 0;
-//    	    if(originalImg != null){
-//    	    	imgLength = originalImg.length;
-//    	        // 商品相册的保存
-//    		    for(int i=0; i<originalImg.length; i++){
-//    		    	GoodsImg goodImg = new GoodsImg();
-//    			    if(goodImgList.size() != 0 && goodImgList.size() >= i+1){	
-//    		    		goodImg = goodImgList.get(i);	    	
-//    			    }
-//    		    	goodImg.setGoodsId(goods.getId());
-//    			    goodImg.setOriginalImg(originalImg[i]);
-//    			    goodImg.setBigThumbImg(bigThumbImg[i]);
-//    			    goodImg.setSmallThumbImg(smallThumbImg[i]);
-//    			    goodsImgService.save(goodImg);
-//    		    }
-//    	    }
-//    	    
-//    	    if(goodImgList.size() > imgLength){
-//    	    	for(int j =imgLength; j< goodImgList.size(); j++){
-//    	    		goodsImgService.delete(goodImgList.get(j));
-//    	    	}
-//    	    }
+    		List<GoodsImg>  goodImgList = goodsImgService.findByGoodsId(goods.getId());
+    	    
+        	int imgLength = 0;
+    	    if(originalImg != null){
+    	    	imgLength = originalImg.length;
+    	        // 商品相册的保存
+    		    for(int i=0; i<originalImg.length; i++){
+    		    	GoodsImg goodImg = new GoodsImg();
+    			    if(goodImgList.size() != 0 && goodImgList.size() >= i+1){	
+    		    		goodImg = goodImgList.get(i);	    	
+    			    }
+    		    	goodImg.setGoodsId(goods.getId());
+    			    goodImg.setOriginalImg(originalImg[i]);
+    			    goodImg.setBigThumbImg(bigThumbImg[i]);
+    			    goodImg.setSmallThumbImg(smallThumbImg[i]);
+    			    goodsImgService.save(goodImg);
+    		    }
+    	    }
+    	    
+    	    if(goodImgList.size() > imgLength){
+    	    	for(int j =imgLength; j< goodImgList.size(); j++){
+    	    		goodsImgService.delete(goodImgList.get(j));
+    	    	}
+    	    }
               
         } catch (Exception e) {
         	log.error(e.getMessage(),e);
             return new ResultMsg(false,"商品保存失败");
         }
-        return new ResultMsg(true,"商品保存成功");
+        Map<String,Object> data = new HashMap<String,Object>();
+        data.put("goods", goods);
+        return new ResultMsg(true,"商品保存成功",data);
     }
     
    
