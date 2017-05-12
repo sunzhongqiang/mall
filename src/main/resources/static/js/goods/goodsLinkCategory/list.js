@@ -81,17 +81,14 @@
         });
         
         leftTreeGrid  = $('#categoryLeftTree').tree({
-            url : '/organization/tree',
+            url : '/goods/category/gridData',
             fit : true,
             fitColumns: true,
             striped : true,
-            rownumbers : false,
-            pagination : false,
             singleSelect : true,
             idField : 'id',
-            treeField : 'name',
-            animate: true,  
-            cascadeCheck:true,//层叠选中  
+            parentField:'parentId',
+            textField : 'name',
             lines:true,//显示虚线效果  
             pageSize : 50,
             pageList : [ 10, 20, 30, 40, 50, 100, 200, 300, 400, 500 ],

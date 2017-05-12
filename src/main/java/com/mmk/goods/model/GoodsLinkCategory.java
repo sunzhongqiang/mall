@@ -1,6 +1,6 @@
 /*
  * 
- *  GoodsLinkCategory 创建于 2017-05-10 11:48:45 版权归作者和作者当前组织所有
+ *  GoodsLinkCategory 创建于 2017-05-12 09:30:23 版权归作者和作者当前组织所有
  */
 package com.mmk.goods.model;
 
@@ -13,8 +13,8 @@ import javax.persistence.Column;
 
 /**
 * GoodsLinkCategory: 商品分类关联表 数据领域模型
-* 2017-05-10 11:48:45
-*@author 孙中强 sunzhongqiang
+* 2017-05-12 09:30:23
+*@author 孙中强 sunzhognqiang
 *@version 1.0
 */
 @Entity
@@ -39,6 +39,12 @@ public class GoodsLinkCategory {
      */
     @Column(name="goods_id",columnDefinition="COMMENT '商品主键'")
     private Long goodsId;
+
+    /**
+     * 用户主键
+     */
+    @Column(name="user_id",columnDefinition="COMMENT '用户主键'")
+    private Long userId;
 
 
     /** 
@@ -78,6 +84,19 @@ public class GoodsLinkCategory {
     */
     public void setGoodsId(Long goodsId) {
         this.goodsId = goodsId;
+    }
+
+    /** 
+	* @return userId ：用户主键
+	*/
+    public Long getUserId() {
+        return userId;
+    }
+    /** 
+    *@param userId 设置用户主键 
+    */
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
 

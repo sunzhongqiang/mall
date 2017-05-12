@@ -90,4 +90,19 @@ public class GoodsLinkCategoryServiceImpl extends BaseServiceImpl<GoodsLinkCateg
         log.info("商品分类关联表根据字["+field+"="+value+"] 进行查询符合条件的所有记录");
         return goodsLinkCategoryDao.findAllBy(field,value);
     }
+    
+    /**
+     * 根据字段获取所有符合的记录
+     * @param userId 用户主键
+     * @return 符合条件的所有对象
+     */
+    @Override
+    public List<GoodsLinkCategory>  findAllByUserId(Long userId){
+        return goodsLinkCategoryRepository.findAllByUserId(userId);
+    }
+    
+     @Override
+    public Page<GoodsLinkCategory>  findAllByUserId(Long userId, Pageable pageable){
+        return goodsLinkCategoryRepository.findAllByUserId(userId,pageable);
+    }
 }

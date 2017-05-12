@@ -89,4 +89,22 @@ public interface GoodsLinkCategoryService extends BaseService<GoodsLinkCategory,
      * 
      */
     List<GoodsLinkCategory> findAllBy(String field,Object value);
+    
+    /**
+     * 根据字段获取所有符合的记录
+     * @param userId 用户主键
+     * @return 符合条件的所有对象
+     * @author 孙中强 sunzhognqiang
+     * 
+     */
+    List<GoodsLinkCategory> findAllByUserId(Long userId);
+    /**
+     * 根据字段获取所有符合的记录
+     * @param userId 用户主键
+     * @param pageable 分页参数
+     * @return 符合条件的所有对象
+     * @author 孙中强 sunzhognqiang
+     * 
+     */
+    Page<GoodsLinkCategory> findAllByUserId(Long userId, Pageable pageable);
 }
