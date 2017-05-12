@@ -93,6 +93,25 @@ public class GoodsController {
     }
     
     /**
+     * 加载表格数据 用户
+     * 
+     * @param goodsLinkCategoryCondition
+     *            用户查询参数
+     * @param pageable
+     *            分页参数
+     * @return 查询所得数据
+     */
+    @RequestMapping("/goods/goods/userCategoryGoods")
+    @ResponseBody
+    public GridData<Goods> userCategoryGoods(Long categoryId,GoodsCondition goodsCondition, EasyPageable pageable){
+        log.info("获取商品分类关联表列表数据");
+        Long userId = CurrentUser.getUser().getId();
+        Page<Goods> goodsPage = goodsService.list(userId,categoryId,goodsCondition,pageable.pageable());   
+        GridData<Goods> grid = new GridData<Goods>(goodsPage);
+        return grid;
+    }
+    
+    /**
      * 加载当前用户的商品列表
      * @param goodsCondition
      * @param pageable

@@ -4,7 +4,7 @@
     var goodsId;
     $(function() {
         goodsGrid = $('#goodsGrid').datagrid({
-        	 url : '/goods/goods/loadByUser',
+        	 url : '/goods/goods/userCategoryGoods',
             fit : true,
             striped : true,
             rownumbers : true,
@@ -99,7 +99,7 @@
                 field : 'name',
             }] ],
             onSelect: function(row) {
-            	userGrid.datagrid('load',{orgId:row.id});
+            	goodsGrid.datagrid('load',{categoryId:row.id});
             }
         });
         
