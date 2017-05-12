@@ -76,4 +76,10 @@ public class GoodsServiceImpl extends BaseServiceImpl<Goods, Long> implements Go
         log.info("商品根据字["+field+"="+value+"] 进行查询符合条件的所有记录");
         return goodsDao.findAllBy(field,value);
     }
+    
+    @Override
+ 	public Page<Goods> list(Long userId, Long categoryId, GoodsCondition goodsCondition, Pageable pageable) {
+ 		log.info("根据分类和商品信息获取商品信息");
+         return goodsDao.listByUserIdAndCategory(userId,categoryId,goodsCondition,pageable);
+ 	}
 }

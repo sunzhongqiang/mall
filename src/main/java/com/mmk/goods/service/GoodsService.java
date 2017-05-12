@@ -72,4 +72,14 @@ public interface GoodsService extends BaseService<Goods, Long> {
      * 
      */
     List<Goods> findAllBy(String field,Object value);
+    
+    /**
+     * 更加用户和分类以及商品信息进行获取用户的商品信息
+     * @param userId 用户id
+     * @param categoryId 分类Id
+     * @param goodsCondition 商品信息
+     * @param pageable 分页信息
+     * @return 商品分页数据
+     */
+	Page<Goods> list(Long userId, Long categoryId, GoodsCondition goodsCondition, Pageable pageable);
 }

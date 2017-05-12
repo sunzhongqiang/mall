@@ -11,7 +11,9 @@ import com.mmk.gene.service.impl.BaseServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.mmk.goods.dao.GoodsLinkCategoryRepository;
+import com.mmk.goods.model.Goods;
 import com.mmk.goods.model.GoodsLinkCategory;
+import com.mmk.goods.condition.GoodsCondition;
 import com.mmk.goods.condition.GoodsLinkCategoryCondition;
 import com.mmk.goods.service.GoodsLinkCategoryService;
 import com.mmk.goods.dao.GoodsLinkCategoryDao;
@@ -105,4 +107,5 @@ public class GoodsLinkCategoryServiceImpl extends BaseServiceImpl<GoodsLinkCateg
     public Page<GoodsLinkCategory>  findAllByUserId(Long userId, Pageable pageable){
         return goodsLinkCategoryRepository.findAllByUserId(userId,pageable);
     }
+     
 }

@@ -16,12 +16,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mmk.common.CurrentUser;
 import com.mmk.common.model.EasyPageable;
 import com.mmk.common.model.GridData;
 import com.mmk.common.model.ResultMsg;
+import com.mmk.goods.condition.GoodsCondition;
 import com.mmk.goods.condition.GoodsLinkCategoryCondition;
+import com.mmk.goods.model.Goods;
 import com.mmk.goods.model.GoodsLinkCategory;
 import com.mmk.goods.service.GoodsLinkCategoryService;
+import com.mmk.goods.service.GoodsService;
 
 /**
 *@Title: GoodsLinkCategoryController
@@ -35,6 +39,9 @@ public class GoodsLinkCategoryController {
     
     @Resource 
     private GoodsLinkCategoryService goodsLinkCategoryService;
+    
+    @Resource 
+    private GoodsService goodsService;
 
     /**
      * 跳转至列表页面
@@ -63,6 +70,25 @@ public class GoodsLinkCategoryController {
         log.info("获取商品分类关联表列表数据");
         Page<GoodsLinkCategory> goodsLinkCategoryPage = goodsLinkCategoryService.list(goodsLinkCategoryCondition,pageable.pageable());   
         GridData<GoodsLinkCategory> grid = new GridData<GoodsLinkCategory>(goodsLinkCategoryPage);
+        return grid;
+    }
+    
+    /**
+     * 加载表格数据 用户
+     * 
+     * @param goodsLinkCategoryCondition
+     *            用户查询参数
+     * @param pageable
+     *            分页参数
+     * @return 查询所得数据
+     */
+    @RequestMapping("/goods/goodsLinkCategory/userCategoryGoods")
+    @ResponseBody
+    public GridData<Goods> userCategoryGoods(Long categoryId,GoodsCondition goodsCondition, EasyPageable pageable){
+        log.info("获取商品分类关联表列表数据");
+        Long userId = CurrentUser.getUser().getId();
+        Page<Goods> goodsLinkCategoryPage = goodsService.list(userId,categoryId,goodsCondition,pageable.pageable());   
+        GridData<Goods> grid = new GridData<Goods>(goodsLinkCategoryPage);
         return grid;
     }
     
@@ -157,5 +183,7 @@ public class GoodsLinkCategoryController {
         }
         return true; 
     }
+    
+    
     
 }

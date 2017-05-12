@@ -68,6 +68,16 @@ public interface GoodsDao extends SpringDataQueryDao<Goods>{
      */
     List<Goods> findAllBy(String field,Object value);
     
+    /**
+     * 根据用户和分类以及商品信息进行获取商品信息
+     * @param userId 用户主键
+     * @param categoryId 分类主键
+     * @param goodsCondition 商品条件
+     * @param pageable 分页信息
+     * @return  符合条件的商品信息
+     */
+	Page<Goods> listByUserIdAndCategory(Long userId, Long categoryId, GoodsCondition goodsCondition, Pageable pageable);
+    
     
 
 }

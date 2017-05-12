@@ -5,7 +5,10 @@ import java.util.List;
 import com.mmk.gene.service.BaseService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import com.mmk.goods.model.Goods;
 import com.mmk.goods.model.GoodsLinkCategory;
+import com.mmk.goods.condition.GoodsCondition;
 import com.mmk.goods.condition.GoodsLinkCategoryCondition;
 
 /**
@@ -107,4 +110,5 @@ public interface GoodsLinkCategoryService extends BaseService<GoodsLinkCategory,
      * 
      */
     Page<GoodsLinkCategory> findAllByUserId(Long userId, Pageable pageable);
+
 }

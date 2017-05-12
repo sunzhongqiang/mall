@@ -176,6 +176,52 @@ public class GoodsDaoImpl extends SpringDataQueryDaoImpl<Goods> implements Goods
         params.put("value",value);
         return queryByJpql(sb.toString(), params);
     }
+
+	@Override
+	public Page<Goods> listByUserIdAndCategory(Long userId, Long categoryId, GoodsCondition goodsCondition,
+			Pageable pageable) {
+		StringBuffer sb=new StringBuffer("select model from Goods model ,GoodsLinkCategory link  where model.id = link.goodsId and  link.userId = :userId  ");
+        Map<String,Object> params = new HashMap<String,Object>();
+        
+        params.put("userId", userId);
+        if(categoryId != null){
+        	sb.append(" and link.categoryId = :categoryId ");
+        	params.put("categoryId", categoryId);
+        }
+        if(StringUtils.isNotBlank(goodsCondition.getTitle())){
+            sb.append(" and model.title like :title ");
+            params.put("title","%"+goodsCondition.getTitle()+"%");
+        }
+        if(goodsCondition.getPrice()!=null){
+            sb.append(" and model.price = :price ");
+            params.put("price",goodsCondition.getPrice());
+        }
+        if(goodsCondition.getNum()!=null){
+            sb.append(" and model.num = :num ");
+            params.put("num",goodsCondition.getNum());
+        }
+        if(StringUtils.isNotBlank(goodsCondition.getCode())){
+            sb.append(" and model.code = :code ");
+            params.put("code",goodsCondition.getCode());
+        }
+        if(StringUtils.isNotBlank(goodsCondition.getBarcode())){
+            sb.append(" and model.barcode = :barcode ");
+            params.put("barcode",goodsCondition.getBarcode());
+        }
+        if(goodsCondition.getIsOnsale()!=null){
+            sb.append(" and model.isOnsale = :isOnsale ");
+            params.put("isOnsale",goodsCondition.getIsOnsale());
+        }
+        if(goodsCondition.getCreated()!=null){
+            sb.append(" and model.created = :created ");
+            params.put("created",goodsCondition.getCreated());
+        }
+        if(goodsCondition.getUserId()!=null){
+            sb.append(" and model.userId = :userId ");
+            params.put("userId",goodsCondition.getUserId());
+        }
+        return queryByJpql(sb.toString(), params, pageable);
+	}
     
     
 }
