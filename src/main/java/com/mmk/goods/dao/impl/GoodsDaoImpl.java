@@ -78,6 +78,10 @@ public class GoodsDaoImpl extends SpringDataQueryDaoImpl<Goods> implements Goods
             sb.append(" and model.created = :created ");
             params.put("created",goodsCondition.getCreated());
         }
+        if(goodsCondition.getUserId()!=null){
+            sb.append(" and model.userId = :userId ");
+            params.put("userId",goodsCondition.getUserId());
+        }
         return queryByJpql(sb.toString(), params, pageable);
     }
 

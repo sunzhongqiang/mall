@@ -175,16 +175,20 @@
             	var result = JSON.parse(goods);
             	var url = '/goods/sku/save?goodsId='+result.message.goods.id;
             	console.log('store.data.rows',store.data.rows);
-                $.ajax({
-                	  type: 'POST',
-                	  contentType: "application/json;charset=utf-8", 
-                	  url: url ,
-                	  data: JSON.stringify(store.data.rows),
-                	  success: function(data){
-                		  //console.log("skusave",data);
-                	  }
-               });
-               parent.refreshTab("商品列表");
+            	console.log('开始保存sku');
+                if(store.data.rows.length>0){
+                	$.ajax({
+                  	  type: 'POST',
+                  	  contentType: "application/json;charset=utf-8", 
+                  	  url: url ,
+                  	  data: JSON.stringify(store.data.rows),
+                  	  success: function(data){
+                  		  console.log("skusave",data);
+                  		  alert('商品保存成功');
+                  		  parent.refreshTab("商品管理");
+                  	  }
+                 });
+                }
             }   
         });   
     });

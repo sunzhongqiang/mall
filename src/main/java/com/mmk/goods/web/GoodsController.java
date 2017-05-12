@@ -85,6 +85,29 @@ public class GoodsController {
         return grid;
     }
     
+    @RequestMapping("/goods/goods/userGoodslist")
+    public ModelAndView userGoodslist(){
+        log.info("商品列表查询");
+        ModelAndView modelAndView = new ModelAndView("goods/goods/userGoodsList");
+        return  modelAndView;
+    }
+    
+    /**
+     * 加载当前用户的商品列表
+     * @param goodsCondition
+     * @param pageable
+     * @return
+     */
+    @RequestMapping("/goods/goods/loadByUser")
+    @ResponseBody
+    public  GridData<Goods> loadByCurrentUser(GoodsCondition goodsCondition, EasyPageable pageable){
+    	log.info("获取商品列表数据");
+    	goodsCondition.setUserId(CurrentUser.getUser().getId());
+        Page<Goods> goodsPage = goodsService.list(goodsCondition,pageable.pageable());   
+        GridData<Goods> grid = new GridData<Goods>(goodsPage);
+        return grid;
+    }
+    
     /**
      * 新增页面
      * @return 跳转到商品新增页面

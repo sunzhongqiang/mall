@@ -184,7 +184,6 @@ function closeTab(title){
 }
 
 
-
 function refreshTab(title) {
 	var t = $('#index_tabs');
 	if(title){
