@@ -36,47 +36,10 @@
                  }
            ]],
            onSelect: function(index,row) {
-          	 goodsId = row.id;
-          	 treegrid = $('#categoryTree').tree({
-           		url : '/privilege/authorizeTree?roleId='+roleId,
-           		cascadeCheck:false,
-           		onCheck: function(row,checked) {
-           			var parent = treegrid.tree("getParent",row.target);
-           			if(checked){
-               			if(parent){
-               				if(!parent.checked){
-               					treegrid.tree("check",parent.target);
-               				}
-               			}
-           			}else{
-           				if(row.children){
-           					for(var i=0; i< row.children.length; i++){
-           						var nodechild =  row.children[i];
-           						if(nodechild.checked){
-           							treegrid.tree("uncheck",row.children[i].target);
-           						}
-           					}
-           				}
-           				
-           			}
-                   	if(!goodsId){
-                   		alert("请指定角色！");
-                   		return false;
-                   	}
-                   	 $.ajax({
-                            url: '/privilege/authorize',
-                           data:{roleId:roleId,functionId:row.id,checked:checked},
-                            success: function(result){
-                                progressClose();
-                            },
-                            error: function(){
-                                progressClose();
-                                alert("系统错误");
-                            }
-                        });
-                   }
-          	 });
-        }
+        	   goodsId = row.id;
+        	   progressLoad();
+        	   treeGrid.tree('reload');
+           }
            
         });
         
@@ -103,38 +66,7 @@
             }
         });
         
-        
-        treeGrid = $('#categoryTree').tree({
-            url : '/goods/category/gridData',
-            fit : true,
-            fitColumns: true,
-            striped : true,
-            singleSelect : true,
-            idField : 'id',
-            parentField:'parentId',
-            textField : 'name',
-            animate: true,  
-            checkbox: true,  
-            lines:true,//显示虚线效果  
-            onCheck: function(row,checked) {
-            	if(!goodsId){
-            		alert("请选择商品");
-            		return false;
-            	}
-            	 $.ajax({
-                     url: '/goods/goodsLinkCategory/add',
-                    data:{goodsId:goodsId,categoryId:row.id},
-                     success: function(result){
-                         progressClose();
-                     },
-                     error: function(){
-                         progressClose();
-                         alert("系统错误");
-                     }
-                 });
-            	
-            }
-        });
+        loadGoodsCategory();
     });
     
     
@@ -147,5 +79,48 @@
         $('#searchForm input').val('');
         //重新加载数据，无填写数据，向后台传递值则为空
         goodsGrid.datagrid('load', {});
+    }
+    
+    
+    function loadGoodsCategory(){
+    	treeGrid = $('#categoryTree').tree({
+            url : '/goods/category/loadByGoodsId',
+            fit : true,
+            fitColumns: true,
+            striped : true,
+            singleSelect : true,
+            idField : 'id',
+            parentField:'parentId',
+            textField : 'name',
+            animate: true,  
+            checkbox: true,  
+            cascadeCheck:false,
+            lines:true,//显示虚线效果  
+            onCheck: function(row,checked) {
+            	if(!goodsId){
+            		alert("请选择商品");
+            		return false;
+            	}
+            	
+            	console.log('row',row);
+            	console.log('checked',checked);
+            	
+            	$.ajax({
+                    url: '/goods/goodsLinkCategory/link',
+                   data:{goodsId:goodsId,categoryId:row.id,checked:checked},
+                    success: function(result){
+                        progressClose();
+                    },
+                    error: function(){
+                        progressClose();
+                        alert("系统错误");
+                    }
+                });
+            },
+            onBeforeLoad:function(node,param){
+            	param.goodsId = goodsId;
+            }
+    	
+        });
     }
     

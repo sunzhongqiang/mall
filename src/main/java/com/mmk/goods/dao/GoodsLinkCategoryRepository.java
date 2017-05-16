@@ -69,5 +69,14 @@ public interface GoodsLinkCategoryRepository extends JpaRepository<GoodsLinkCate
      * 
      */
     Page<GoodsLinkCategory> findAllByUserId(Long userId,Pageable pageable);
+    
+    /**
+     * 根据用户，商品，分类三者获取对应的值
+     * @param userId 用户
+     * @param goodsId 商品
+     * @param categoryId 分类
+     * @return 对应的值
+     */
+	GoodsLinkCategory findAllByUserIdAndGoodsIdAndCategoryId(Long userId, Long goodsId, Long categoryId);
 
 }

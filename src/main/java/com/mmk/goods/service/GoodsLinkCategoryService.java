@@ -111,4 +111,21 @@ public interface GoodsLinkCategoryService extends BaseService<GoodsLinkCategory,
      */
     Page<GoodsLinkCategory> findAllByUserId(Long userId, Pageable pageable);
 
+    /**
+     * 根据用户主键和商品主键获取当前商品的关联分类
+     * @param userId
+     * @param goodsId
+     * @return
+     */
+	List<GoodsLinkCategory> findAllByUserAndGoodsId(Long userId, Long goodsId);
+
+	/**
+	 * 根据用户，商品，分类或者三者的管理
+	 * @param userId 用户
+	 * @param goodsId 商品
+	 * @param categoryId 分类
+	 * @return 符合条件的结果
+	 */
+	GoodsLinkCategory findBy(Long userId, Long goodsId, Long categoryId);
+
 }

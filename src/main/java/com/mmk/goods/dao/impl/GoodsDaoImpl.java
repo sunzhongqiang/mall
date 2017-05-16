@@ -180,47 +180,47 @@ public class GoodsDaoImpl extends SpringDataQueryDaoImpl<Goods> implements Goods
 	@Override
 	public Page<Goods> listByUserIdAndCategory(Long userId, Long categoryId, GoodsCondition goodsCondition,
 			Pageable pageable) {
-		StringBuffer sb=new StringBuffer("select model from Goods model ,GoodsLinkCategory link  where model.id = link.goodsId and  link.userId = :userId  ");
-        Map<String,Object> params = new HashMap<String,Object>();
+		StringBuffer sb=new StringBuffer("select distinct goods.* from goods left join goods_link_category link on goods.id = link.goods_id where goods.user_id = ?1  ");
+        Map<Integer,Object> params = new HashMap<Integer,Object>();
         
-        params.put("userId", userId);
+        params.put(1, userId);
         if(categoryId != null){
-        	sb.append(" and link.categoryId = :categoryId ");
-        	params.put("categoryId", categoryId);
+        	sb.append(" and link.categoryId = ?2 ");
+        	params.put(2, categoryId);
         }
         if(StringUtils.isNotBlank(goodsCondition.getTitle())){
-            sb.append(" and model.title like :title ");
-            params.put("title","%"+goodsCondition.getTitle()+"%");
+            sb.append(" and model.title like ?3 ");
+            params.put(3,"%"+goodsCondition.getTitle()+"%");
         }
         if(goodsCondition.getPrice()!=null){
-            sb.append(" and model.price = :price ");
-            params.put("price",goodsCondition.getPrice());
+            sb.append(" and model.price = ?4 ");
+            params.put(4,goodsCondition.getPrice());
         }
         if(goodsCondition.getNum()!=null){
-            sb.append(" and model.num = :num ");
-            params.put("num",goodsCondition.getNum());
+            sb.append(" and model.num = ?5 ");
+            params.put(5,goodsCondition.getNum());
         }
         if(StringUtils.isNotBlank(goodsCondition.getCode())){
-            sb.append(" and model.code = :code ");
-            params.put("code",goodsCondition.getCode());
+            sb.append(" and model.code = ?6 ");
+            params.put(6,goodsCondition.getCode());
         }
         if(StringUtils.isNotBlank(goodsCondition.getBarcode())){
-            sb.append(" and model.barcode = :barcode ");
-            params.put("barcode",goodsCondition.getBarcode());
+            sb.append(" and model.barcode = ?7 ");
+            params.put(7,goodsCondition.getBarcode());
         }
         if(goodsCondition.getIsOnsale()!=null){
-            sb.append(" and model.isOnsale = :isOnsale ");
-            params.put("isOnsale",goodsCondition.getIsOnsale());
+            sb.append(" and model.isOnsale = ?8 ");
+            params.put(8,goodsCondition.getIsOnsale());
         }
         if(goodsCondition.getCreated()!=null){
-            sb.append(" and model.created = :created ");
-            params.put("created",goodsCondition.getCreated());
+            sb.append(" and model.created = ?9 ");
+            params.put(9,goodsCondition.getCreated());
         }
         if(goodsCondition.getUserId()!=null){
-            sb.append(" and model.userId = :userId ");
-            params.put("userId",goodsCondition.getUserId());
+            sb.append(" and model.userId = ?10 ");
+            params.put(10,goodsCondition.getUserId());
         }
-        return queryByJpql(sb.toString(), params, pageable);
+        return queryBySql(sb.toString(), params, pageable);
 	}
     
     

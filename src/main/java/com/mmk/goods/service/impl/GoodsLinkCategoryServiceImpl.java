@@ -2,7 +2,10 @@ package com.mmk.goods.service.impl;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.apache.commons.logging.Log;
@@ -107,5 +110,18 @@ public class GoodsLinkCategoryServiceImpl extends BaseServiceImpl<GoodsLinkCateg
     public Page<GoodsLinkCategory>  findAllByUserId(Long userId, Pageable pageable){
         return goodsLinkCategoryRepository.findAllByUserId(userId,pageable);
     }
+
+	@Override
+	public List<GoodsLinkCategory> findAllByUserAndGoodsId(Long userId, Long goodsId) {
+		Map<String, Object> params = new HashMap<String,Object>();
+		params.put("userId", userId);
+		params.put("goodsId", goodsId);
+		return goodsLinkCategoryDao.findAllBy(params);
+	}
+
+	@Override
+	public GoodsLinkCategory findBy(Long userId, Long goodsId, Long categoryId) {
+		return goodsLinkCategoryRepository.findAllByUserIdAndGoodsIdAndCategoryId(userId,goodsId,categoryId);
+	}
      
 }

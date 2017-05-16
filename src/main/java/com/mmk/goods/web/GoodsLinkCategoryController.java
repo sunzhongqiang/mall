@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mmk.common.CurrentUser;
 import com.mmk.common.model.EasyPageable;
 import com.mmk.common.model.GridData;
 import com.mmk.common.model.ResultMsg;
@@ -106,12 +107,41 @@ public class GoodsLinkCategoryController {
     public ResultMsg save(GoodsLinkCategory goodsLinkCategory){
         log.info("商品分类关联表保存");
         try {
+        	goodsLinkCategory.setUserId(CurrentUser.getUser().getId());
             goodsLinkCategoryService.save(goodsLinkCategory);
         } catch (Exception e) {
         	log.error(e.getMessage(),e);
             return new ResultMsg(false,"商品分类关联表保存失败");
         }
         return new ResultMsg(true,"商品分类关联表保存成功");
+    }
+    
+    /**
+     * 添加或者取消商品和分类关联
+     * @param gooodsId  商品主键
+     * @param categoryId 分类主键
+     * @param checked  取消或者新增关联
+     * @return  处理结果
+     */
+    @RequestMapping("/goods/goodsLinkCategory/link")
+    @ResponseBody
+    public ResultMsg link(Long goodsId,Long categoryId,boolean checked){
+    	Long userId = CurrentUser.getUser().getId();
+    	if (checked) {
+    		GoodsLinkCategory goodsLinkCategory = goodsLinkCategoryService.findBy(userId, goodsId,categoryId);
+    		if(goodsLinkCategory==null){
+    			GoodsLinkCategory link = new GoodsLinkCategory();
+        		link.setCategoryId(categoryId);
+        		link.setUserId(userId);
+        		link.setGoodsId(goodsId);
+    			goodsLinkCategoryService.save(link);
+    		}
+		} else {
+			GoodsLinkCategory goodsLinkCategory = goodsLinkCategoryService.findBy(userId, goodsId,categoryId);
+			goodsLinkCategoryService.delete(goodsLinkCategory);
+			
+		}
+    	return new ResultMsg(true,"商品分类关联表保存成功");
     }
     
    
@@ -161,6 +191,12 @@ public class GoodsLinkCategoryController {
             return false;
         }
         return true; 
+    }
+    
+    @RequestMapping("/goods/goodsLinkCategory/loadByUserIdAndGoodsId")
+    public List<GoodsLinkCategory> loadByUserIdAndGoodsId(Long goodsId){
+    	Long userId = CurrentUser.getUser().getId();
+    	return goodsLinkCategoryService.findAllByUserAndGoodsId(userId,goodsId);
     }
     
     
