@@ -27,15 +27,30 @@
             <table>
                 <tr>
 
-                    <th>分类主键：</th>
+                    <th>商品名称：</th>
                       <td>
-                        <input type="text" name="categoryId" th:value="${goodsLinkCategoryCondition} ? ${goodsLinkCategoryCondition.categoryId} :''"/>
+                        <input type="text" name="title" th:value="${goodsLinkCategoryCondition} ? ${goodsLinkCategoryCondition.categoryId} :''"/>
                       </td>
                   
 
-                    <th>商品主键：</th>
+                    <th>商品编码：</th>
                       <td>
-                        <input type="text" name="goodsId" th:value="${goodsLinkCategoryCondition} ? ${goodsLinkCategoryCondition.goodsId} :''"/>
+                        <input type="text" name="code" th:value="${goodsLinkCategoryCondition} ? ${goodsLinkCategoryCondition.goodsId} :''"/>
+                      </td>
+                    
+                    
+                    <th>商品条码：</th>
+                      <td>
+                        <input type="text" name="barcode" th:value="${goodsLinkCategoryCondition} ? ${goodsLinkCategoryCondition.goodsId} :''"/>
+                      </td>
+                      
+                      <th>是否出售中：</th>
+                      <td>
+                        <select id="cc" class="easyui-combobox" name="dept" style="width:200px;">
+						    <option value="">全部</option>
+						    <option value="true">出售中</option>
+						    <option value="false">仓库中</option>
+						</select>
                       </td>
                   
                       <td>

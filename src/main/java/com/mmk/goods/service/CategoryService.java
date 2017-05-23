@@ -114,5 +114,13 @@ public interface CategoryService extends BaseService<Category, Long> {
 	List<Tree> tree(CategoryCondition categoryCondition);
 	
 	List<Category> findChildrenByPath(String path);
+
+	/**
+	 * 根据用户和商品获获取商品分类
+	 * @param userId 用户主键
+	 * @param goodsId 商品主键
+	 * @return
+	 */
+	List<CategoryCondition> loadByGoodsId(Long userId, Long goodsId);
 	
 }

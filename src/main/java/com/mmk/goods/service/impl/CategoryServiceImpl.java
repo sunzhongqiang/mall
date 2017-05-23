@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeanUtils;
@@ -190,5 +191,20 @@ public class CategoryServiceImpl extends BaseServiceImpl<Category, Long> impleme
 		List<Category> categories = findChildrenByPath(path);
 		delete(categories);
 		super.delete(entity);
+	}
+
+	@Override
+	public List<CategoryCondition> loadByGoodsId(Long userId, Long goodsId) {
+		List<Map<String, Object>> result = categoryDao.loadByUserIdAndGoodsId(userId,goodsId);
+		List<CategoryCondition> backResult = new ArrayList<CategoryCondition>();
+		for (Map<String, Object> map : result) {
+			CategoryCondition bean = new CategoryCondition();
+			bean.setName(MapUtils.getString(map, "name"));
+			bean.setParentId(MapUtils.getLong(map,"parentId"));
+			bean.setChecked(MapUtils.getBoolean(map,"checked"));
+			bean.setId(MapUtils.getLong(map,"id"));
+			backResult.add(bean);
+		}
+		return backResult;
 	}
 }

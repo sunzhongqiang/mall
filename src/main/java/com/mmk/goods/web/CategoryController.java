@@ -4,6 +4,7 @@
  */
 package com.mmk.goods.web;
 
+import com.mmk.common.CurrentUser;
 import com.mmk.common.model.EasyPageable;
 import com.mmk.common.model.GridData;
 import com.mmk.common.model.ResultMsg;
@@ -168,6 +169,17 @@ public class CategoryController {
             return false;
         }
         return true; 
+    }
+    
+    /**
+     * 获取商品的关联分类
+     * @param goodsId 商品主键
+     * @return
+     */
+    @RequestMapping("/goods/category/loadByGoodsId")
+    public List<CategoryCondition> loadByGoodsId(Long goodsId){
+    	Long userId = CurrentUser.getUser().getId();
+    	return categoryService.loadByGoodsId(userId,goodsId);
     }
     
 }

@@ -180,12 +180,12 @@ public class GoodsDaoImpl extends SpringDataQueryDaoImpl<Goods> implements Goods
 	@Override
 	public Page<Goods> listByUserIdAndCategory(Long userId, Long categoryId, GoodsCondition goodsCondition,
 			Pageable pageable) {
-		StringBuffer sb=new StringBuffer("select distinct goods.* from goods left join goods_link_category link on goods.id = link.goods_id where goods.user_id = ?1  ");
+		StringBuffer sb=new StringBuffer("select distinct model.* from goods model left join goods_link_category link on model.id = link.goods_id where model.user_id = ?1  ");
         Map<Integer,Object> params = new HashMap<Integer,Object>();
         
         params.put(1, userId);
         if(categoryId != null){
-        	sb.append(" and link.categoryId = ?2 ");
+        	sb.append(" and link.category_id = ?2 ");
         	params.put(2, categoryId);
         }
         if(StringUtils.isNotBlank(goodsCondition.getTitle())){
@@ -209,16 +209,12 @@ public class GoodsDaoImpl extends SpringDataQueryDaoImpl<Goods> implements Goods
             params.put(7,goodsCondition.getBarcode());
         }
         if(goodsCondition.getIsOnsale()!=null){
-            sb.append(" and model.isOnsale = ?8 ");
+            sb.append(" and model.is_onsale = ?8 ");
             params.put(8,goodsCondition.getIsOnsale());
         }
         if(goodsCondition.getCreated()!=null){
             sb.append(" and model.created = ?9 ");
             params.put(9,goodsCondition.getCreated());
-        }
-        if(goodsCondition.getUserId()!=null){
-            sb.append(" and model.userId = ?10 ");
-            params.put(10,goodsCondition.getUserId());
         }
         return queryBySql(sb.toString(), params, pageable);
 	}

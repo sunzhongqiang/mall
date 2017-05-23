@@ -81,6 +81,14 @@ public interface CategoryDao extends SpringDataQueryDao<Category>{
 	 * @return 路径下的所有子节点
 	 */
 	List<Category> findChildrenByPath(String path);
+	
+	/**
+	 * 根据用户和商品主键获取商品管理分类
+	 * @param userId
+	 * @param goodsId
+	 * @return
+	 */
+	List<Map<String,Object>> loadByUserIdAndGoodsId(Long userId, Long goodsId);
     
     
 

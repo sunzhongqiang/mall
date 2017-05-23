@@ -141,6 +141,29 @@ public class CategoryDaoImpl extends SpringDataQueryDaoImpl<Category> implements
         sb.append(" order by model.sortOrder ");
 		return queryByJpql(sb.toString(), params);
 	}
+
+	@Override
+	public List<Map<String,Object>> loadByUserIdAndGoodsId(Long userId, Long goodsId) {
+		 StringBuffer sb=new StringBuffer("SELECT distinct category.id,category.parent_id AS parentId,category.name,category.path, link.goods_id,IF(link.goods_id IS NOT NULL, TRUE, FALSE) checked ");
+		 sb.append(" FROM goods_category category ");
+		 sb.append(" LEFT JOIN (");
+		 sb.append(" select category_id,goods_id from goods_link_category  where 1=1 ");
+		
+	        Map<Integer,Object> params = new HashMap<Integer,Object>();
+	        if(userId!=null){
+	            sb.append(" and user_id = ?3 ");
+	            params.put(3,userId);
+	        }
+	        if(goodsId!=null){
+	            sb.append(" and goods_id = ?4 ");
+	            params.put(4,goodsId);
+	        }else{
+	        	sb.append(" and goods_id is null ");
+	        }
+	        
+	        sb.append(" ) link on link.category_id = category.id ");
+	        return queryFieldsBySql(sb.toString(), params);
+	}
     
     
 }

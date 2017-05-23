@@ -21,6 +21,8 @@ public class CategoryCondition extends Category{
 
 
     private List<CategoryCondition> children = new ArrayList<CategoryCondition>();
+    
+    private Boolean checked = false;
 
     public List<CategoryCondition> getChildren() {
         return children;
@@ -29,5 +31,13 @@ public class CategoryCondition extends Category{
     public void setChildren(List<CategoryCondition> children) {
         this.children = children;
     }
+
+	public Boolean getChecked() {
+		return checked;
+	}
+
+	public void setChecked(Boolean checked) {
+		this.checked = checked;
+	}
 
 }
